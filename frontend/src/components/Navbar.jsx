@@ -30,13 +30,13 @@ export default function Navbar() {
                 <a href="/" > Home </a>
               </li>
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
+                <a href="/"> About </a>
+              </li>
+              <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
                 <a href="/"> Article </a>
               </li>
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
                 <a href="/"> Find Mentor </a>
-              </li>
-              <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
-                <a href="/"> Course </a>
               </li>
               <br/>
             </ul>
