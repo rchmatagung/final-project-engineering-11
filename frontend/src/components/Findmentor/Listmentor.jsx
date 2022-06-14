@@ -23,7 +23,7 @@ function FIndmentor() {
     <div className="">
       <div className="px-7 mb-8">
         <h2 className="text-3xl font-bold text-green-800 dark:text-gray-300">
-          Mentor vvibw
+          Halomoan Nababan
         </h2>
         <p className="text-gray-400 mt-2 dark:text-gray-400">Illustrator</p>
         <p className="mt-2 text-gray-600 dark:text-gray-300">

@@ -1,10 +1,24 @@
 import './App.css';
-import FIndmentor from './components/Findmentor/FIndmentor';
+// import Listrole from './components/Findmentor/Listrole';
+import Listmentor from './components/Findmentor/Listmentor';
+import Navbar from './components/Home/Navbar';
+// import Articles from './components/Home/Articles';
+// import Hero from './components/Home/Hero';
+import Footer from './components/Home/Footer';
+// import Search from './components/Searchbar/Search';
 
 function App() {
   return (
     <>
-    <FIndmentor />
+    <Navbar />
+    {/* <Hero /> */}
+    {/* <Search/> */}
+    {/* <Articles/> */}
+    {/* <Listrole/> */}
+    <Listmentor/>
+    <Footer/>
+
+
     </>
   );
 }
