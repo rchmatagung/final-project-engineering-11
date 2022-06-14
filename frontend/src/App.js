@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Articles from  "./components/Articles";
+import Hero from "./components/AboutUsHero"
 import Footer from "./components/Footer";
 
 function App() {
@@ -8,7 +7,6 @@ function App() {
     <div className="App">
       <Navbar />
       <Hero />
-      <Articles />
       <Footer />
     </div>
   );
