@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
-const SignIn = () => {
-  const [email, setEmail] = useState('');
+const SignIn = (props) => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   return (
@@ -13,10 +13,10 @@ const SignIn = () => {
             <div className="mt-5">
                 <form className="flex flex-col">
                     <div className="mb-6 pt-3 rounded bg-gray-200">
-                        <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="email">Email</label>
-                        <input type="text" id="email"
+                        <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="username">Username</label>
+                        <input type="text" id="username"
                         className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
                     <div className="mb-6 pt-3 rounded bg-gray-200">
