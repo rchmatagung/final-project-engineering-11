@@ -14,8 +14,7 @@ const Footer = () => {
                 <h6 className='font-bold uppercase pt-2'>Content</h6>
                 <ul>
                     <li className='py-1'><a href='/'>Home</a></li>
-                    <li className='py-1'><a href='/'>Article</a></li>
-                    <li className='py-1'><a href='/'>course</a></li>
+                    <li className='py-1'><a href='/'>About</a></li>
                     <li className='py-1'><a href='/'>Find Mentor</a></li>
                 </ul>
             </div>
