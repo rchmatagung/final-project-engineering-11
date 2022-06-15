@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import logoImg from '../assets/logohi.png'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -27,20 +28,20 @@ export default function Navbar() {
           >
             <ul className="flex flex-col md:flex-row list-none mr-auto">
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
-                <a href="/" > Home </a>
+                <Link to={`/`} > Home </Link>
               </li>
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
-                <a href="/"> About </a>
+                <Link to={`/about`} > About </Link>
               </li>
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
-                <a href="/"> Find Mentor </a>
+                <Link to={`/findmentor`} > Find Mentor </Link>
               </li>
               <br/>
             </ul>
             <div className="flex flex-col md:flex-row md:justify-end">
-                 <button className="rounded-lg bg-yellow-500 px-5 py-3"> Sign In </button>
-                 <button className="px-5 py-3"> Sign Up </button>
-             </div>
+                <Link to={`/signup`} className="rounded-lg bg-yellow-500 px-5 py-3 hover:font-bold">Sign Up</Link>
+                <Link to={`/signin`} className="px-5 py-3 hover:font-bold">Sign Up</Link>
+            </div>
           </div>
         </div>
       </nav>

@@ -1,6 +1,7 @@
 import React from 'react'
 import logoImg from '../assets/logohi.png'
 import {MailIcon, HomeIcon, PhoneIcon} from '@heroicons/react/outline'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -13,9 +14,9 @@ const Footer = () => {
             <div className='col-span-1 px-8'>
                 <h6 className='font-bold uppercase pt-2'>Content</h6>
                 <ul>
-                    <li className='py-1'><a href='/'>Home</a></li>
-                    <li className='py-1'><a href='/'>About</a></li>
-                    <li className='py-1'><a href='/'>Find Mentor</a></li>
+                    <li className='py-1'><Link to={`/`} > Home </Link></li>
+                    <li className='py-1'><Link to={`/about`} > About </Link></li>
+                    <li className='py-1'><Link to={`/findmentor`} > Find Mentor </Link></li>
                 </ul>
             </div>
             <div className='col-span-1 px-8'>
