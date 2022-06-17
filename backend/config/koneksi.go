@@ -8,7 +8,7 @@ import (
 )
 
 func GetConnection() *sql.DB {
-	db, err := sql.Open("sqlite3", "db/migration/app2.db?_loc=Local")
+	db, err := sql.Open("sqlite3", "db/migration/app1.db?_loc=Local")
 	if err != nil {
 		panic(err)
 	}

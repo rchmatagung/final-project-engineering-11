@@ -7,7 +7,7 @@ import (
 )
 
 func Migrate() {
-	db, err := sql.Open("sqlite3", "db/migration/app2.db?_loc=Local")
+	db, err := sql.Open("sqlite3", "db/migration/app1.db?_loc=Local")
 	if err != nil {
 		panic(err)
 	}
@@ -44,8 +44,10 @@ CREATE TABLE IF NOT EXISTS artikel (
 
 CREATE TABLE IF NOT EXISTS bookmentor (
 	id integer not null primary key AUTOINCREMENT,
+	member_id integer not null,
 	mentor_id integer not null,
-	book_id integer not null,
+	bookid varchar(255) not null,
+	status varchar(255) not null,
 	created_at datetime not null
 );
 

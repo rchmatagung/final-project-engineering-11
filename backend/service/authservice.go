@@ -10,11 +10,13 @@ import (
 )
 
 type AuthServiceimpl struct {
-	userRepo repository.UserInterface
+	userRepo   repository.UserRepo
+	bookRepo   repository.BookRepository
+	mentorRepo repository.MentorRepository
 }
 
-func NewAuthService(userRepo repository.UserInterface) AuthService {
-	return &AuthServiceimpl{userRepo}
+func NewAuthService(userRepo repository.UserRepo, bookRepo repository.BookRepository, mentor repository.MentorRepository) (AuthService, UserService, BookService, AdminService) {
+	return &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}
 }
 
 func (a *AuthServiceimpl) Login(loginReq model.PayloadUser) (string, error) {
@@ -61,23 +63,4 @@ func (a *AuthServiceimpl) Register(register model.UserRegis) error {
 	}
 
 	return nil
-}
-
-func (a *AuthServiceimpl) GetRoleByUserName(username string) (string, error) {
-	ctx := context.Background()
-	findUser, err := a.userRepo.GetByUsername(ctx, username)
-	if err != nil {
-		return "", err
-	}
-
-	return findUser.Role, nil
-}
-
-func (r *AuthServiceimpl) GetIdByUserName(username string) (int, error) {
-	ctx := context.Background()
-	data, err := r.userRepo.GetIdByUserName(ctx, username)
-	if err != nil {
-		return 0, err
-	}
-	return data, nil
 }

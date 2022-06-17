@@ -17,11 +17,11 @@ func GetAuthentication(c *gin.Context) error {
 		return err
 	}
 
-	if _, ok := token.Claims.(jwt.Claims); ok && token.Valid {
-		return nil
+	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
+		return err
 	}
 
-	return err
+	return nil
 }
 
 func VerifyToken(c *gin.Context) (*jwt.Token, error) {
@@ -49,6 +49,7 @@ func TakeToken(c *gin.Context) string {
 	if err == http.ErrNoCookie {
 		return ""
 	}
+
 	c.Writer.Header().Set("Authorization", "Bearer "+keys)
 	return keys
 

@@ -89,8 +89,10 @@ type MentorDetail struct {
 }
 
 type UserDetail struct {
+	ID       int    `json:"id"`
 	Username string `json:"username"`
 	Name     string `json:"name"`
+	Password string `json:"password"`
 	Address  string `json:"address"`
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`

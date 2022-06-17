@@ -2,6 +2,7 @@ package controller
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-11/backend/config"
@@ -11,11 +12,14 @@ import (
 )
 
 type AuthHandler struct {
-	authService service.AuthService
+	authService  service.AuthService
+	userService  service.UserService
+	bookService  service.BookService
+	adminService service.AdminService
 }
 
-func NewAuthHandler(authService service.AuthService) *AuthHandler {
-	return &AuthHandler{authService: authService}
+func NewAuthHandler(authService service.AuthService, userService service.UserService, bookService service.BookService, adminService service.AdminService) *AuthHandler {
+	return &AuthHandler{authService, userService, bookService, adminService}
 }
 func (a *AuthHandler) Login(c *gin.Context) {
 	var loginReq model.PayloadUser
@@ -26,7 +30,7 @@ func (a *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	Role, err := a.authService.GetRoleByUserName(loginReq.Username)
+	Role, err := a.userService.GetRoleByUserName(loginReq.Username)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": 400,
@@ -34,7 +38,7 @@ func (a *AuthHandler) Login(c *gin.Context) {
 		})
 		return
 	}
-	id, err := a.authService.GetIdByUserName(loginReq.Username)
+	id, err := a.userService.GetIdByUserName(loginReq.Username)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"status": 400,
@@ -45,8 +49,7 @@ func (a *AuthHandler) Login(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status": 400,
-			"error":  err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
@@ -59,9 +62,9 @@ func (a *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 	hashcookie, _ := secure.HashPassword(Role)
-	c.SetCookie("token", token, int(config.Configuration.JWT_EXPIRATION_DURATION.Seconds()), "/", "localhost", false, true)
-	c.SetCookie("id", strconv.Itoa(id), int(config.Configuration.JWT_EXPIRATION_DURATION.Seconds()), "/", "localhost", false, true)
-	c.SetCookie("RLPP", hashcookie, int(config.Configuration.JWT_EXPIRATION_DURATION.Seconds()), "/", "localhost", false, true)
+	c.SetCookie("token", token, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
+	c.SetCookie("id", strconv.Itoa(id), int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
+	c.SetCookie("RLPP", hashcookie, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
 
 	c.JSON(200, gin.H{
 		"status":  200,
@@ -103,3 +106,32 @@ func (a *AuthHandler) Logout(c *gin.Context) {
 		"message": "Logout Success",
 	})
 }
+
+type Token struct {
+	Id int `json:"id"`
+}
+
+// func (a *AuthHandler) RefreshToken(c *gin.Context) {
+// 	var token Token
+// 	if err := c.ShouldBindJSON(&token); err != nil {
+// 		c.JSON(400, gin.H{
+// 			"error": err.Error(),
+// 		})
+// 		return
+// 	}
+
+// 	token1, err := secure.RefreshToken(token.Id)
+
+// 	if err != nil {
+// 		c.JSON(400, gin.H{
+// 			"error": err.Error(),
+// 		})
+// 		return
+// 	}
+
+// 	c.JSON(200, gin.H{
+// 		"status":  200,
+// 		"message": "Refresh Token Success",
+// 		"token":   token1,
+// 	})
+// }

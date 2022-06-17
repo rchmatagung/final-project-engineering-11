@@ -5,7 +5,7 @@ Masuk Ke Folder backend lalu ketik go run main.go
 
 - `POST`: `/api/auth/login`
 - `POST`: `/api/auth/logout`
-- `POST`: `/api/auth/register`
+- `GET`: `/api/auth/register`
 
 
 ## REQUEST BODY

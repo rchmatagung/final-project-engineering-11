@@ -13,8 +13,8 @@ type UserRepository struct {
 	db *sql.DB
 }
 
-func NewUserRepository(db *sql.DB) UserInterface {
-	return &UserRepository{db}
+func NewUserRepository(db *sql.DB) (UserRepo, BookRepository, MentorRepository) {
+	return &UserRepository{db}, &UserRepository{db}, &UserRepository{db}
 }
 
 func (u *UserRepository) GetAllUser(ctx context.Context) ([]*model.UserList, error) {
@@ -36,41 +36,22 @@ func (u *UserRepository) GetAllUser(ctx context.Context) ([]*model.UserList, err
 	return users, nil
 }
 
-func (u *UserRepository) GetByID(ctx context.Context, id int) (*model.UserList, error) {
-	var user model.UserList
-	rows, err := u.db.QueryContext(ctx, "SELECT id,username,name,role,address,phone,email,created_at FROM users WHERE id = ?", id)
+func (u *UserRepository) GetByID(ctx context.Context, id int) (*model.UserDetail, error) {
+	var user model.UserDetail
+	rows, err := u.db.QueryContext(ctx, "SELECT id,username,name, password,role,address,phone,email FROM users WHERE id = ?", id)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 	if rows.Next() {
-		err := rows.Scan(&user.ID, &user.Username, &user.Name, &user.Role, &user.Address, &user.Phone, &user.Email, &user.CreatedAt)
+		err := rows.Scan(&user.ID, &user.Username, &user.Name, &user.Password, &user.Role, &user.Address, &user.Phone, &user.Email)
 		if err != nil {
 			return nil, err
 		}
 		return &user, nil
 
 	}
-	return nil, errors.New("User not found")
-}
-
-func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorList, error) {
-	var mentors []*model.MentorList
-	query := "SELECT id,name,skill FROM mentor"
-	rows, err := u.db.QueryContext(ctx, query)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var mentor model.MentorList
-		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill)
-		if err != nil {
-			return nil, err
-		}
-		mentors = append(mentors, &mentor)
-	}
-	return mentors, nil
+	return &user, errors.New("User not found")
 }
 
 func (u *UserRepository) GetByUsername(ctx context.Context, username string) (*model.User, error) {
@@ -88,7 +69,7 @@ func (u *UserRepository) GetByUsername(ctx context.Context, username string) (*m
 		return &user, nil
 
 	}
-	return nil, errors.New("User not found")
+	return &user, errors.New("User not found")
 }
 
 func (u *UserRepository) CreateUser(ctx context.Context, user *model.UserRegis) error {

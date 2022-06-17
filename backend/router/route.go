@@ -21,13 +21,26 @@ func Newrouter(authentication *controller.AuthHandler) *Router {
 			auth.POST("/login", authentication.Login)
 			auth.POST("/register", authentication.Register)
 			auth.POST("/logout", authentication.Logout)
+
 		}
 
 		auth2 := api.Group("/user").Use(controller.AuthMiddleware())
 		{
-			auth2.GET("/all", func(c *gin.Context) { c.JSON(200, gin.H{"message": "Hello World"}) })
+			auth2.GET("/mentor/mentorlist", authentication.GetMentor)
+			auth2.GET("/mentor/detail/:id", authentication.DetailMentor)
+			auth2.PUT("/update/:id", authentication.UpdateUserById)
+			auth2.GET("/profile", authentication.UserProfile)
+			auth2.GET("/booking/mentor/:id", authentication.GetRequestMentoring)
+			auth2.GET("/booking/status", authentication.GetAllBookStatusMember)
 
 		}
+		auth3 := api.Group("/admin").Use(controller.AuthMiddleware()).Use(controller.AuthMiddlewareAdmin())
+		{
+			auth3.POST("/registermentor", authentication.RegisMentor)
+
+		}
+		router.route.LoadHTMLFiles("template/accepted.tmpl", "template/errro.tmpl")
+		router.route.GET("/api/mentor/acc/:bookid", authentication.UpdateSatusBooking)
 
 	}
 

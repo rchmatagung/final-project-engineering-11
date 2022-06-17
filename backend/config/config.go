@@ -33,3 +33,9 @@ var Configuration = struct {
 	DB_MAX_OPEN_REQUESTS:    "0",
 	DB_MAX_IDLE_TIME:        "0",
 }
+
+const CONFIG_SMTP_HOST = "smtp.gmail.com"
+const CONFIG_SMTP_PORT = 587
+const CONFIG_SENDER_NAME = "HiCoder Company <hicoder224@gmail.com>"
+const CONFIG_AUTH_EMAIL = "hicoder224@gmail.com"
+const CONFIG_AUTH_PASSWORD = "pkadliooghsdelxk"
