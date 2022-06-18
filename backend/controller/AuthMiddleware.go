@@ -11,25 +11,25 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := secure.GetAuthentication(c)
 		if err != nil {
+			c.SetCookie("token", "", -1, "/", "localhost", false, true)
+			c.SetCookie("RLPP", "", -1, "/", "localhost", false, true)
+			c.SetCookie("id", "", -1, "/", "localhost", false, true)
 			c.JSON(401, gin.H{
 				"status": 401,
 				"error":  err.Error(),
 			})
-			c.SetCookie("token", "", -1, "/", "localhost", false, true)
-			c.SetCookie("RLPP", "", -1, "/", "localhost", false, true)
-			c.SetCookie("id", "", -1, "/", "localhost", false, true)
 			c.Abort()
 			return
 		}
 		res, err1 := secure.ExtractAuthToken(c)
 		if err1 != nil {
+			c.SetCookie("token", "", -1, "/", "localhost", false, true)
+			c.SetCookie("RLPP", "", -1, "/", "localhost", false, true)
+			c.SetCookie("id", "", -1, "/", "localhost", false, true)
 			c.JSON(401, gin.H{
 				"status": 401,
 				"error":  err1.Error(),
 			})
-			c.SetCookie("token", "", -1, "/", "localhost", false, true)
-			c.SetCookie("RLPP", "", -1, "/", "localhost", false, true)
-			c.SetCookie("id", "", -1, "/", "localhost", false, true)
 			c.Abort()
 			return
 
@@ -62,7 +62,8 @@ func AuthMiddlewareAdmin() gin.HandlerFunc {
 		_, err1 := secure.VerifyCookie(cookie, "admin")
 		if err1 != nil {
 			c.JSON(401, gin.H{
-				"error": err1.Error(),
+				"status": 401,
+				"error":  err1.Error(),
 			})
 			c.Abort()
 			return

@@ -1,6 +1,8 @@
 package secure
 
 import (
+	"errors"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-11/backend/model"
@@ -15,9 +17,19 @@ func ExtractAuthToken(c *gin.Context) (*model.Authorize, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
 
 	if ok && token.Valid {
-		id := claims["id"].(float64)
-		username := claims["username"].(string)
-		role := claims["role"].(string)
+		id, ok := claims["id"].(float64)
+		if !ok {
+			return nil, errors.New("Invalid token")
+		}
+		username, ok := claims["username"].(string)
+		if !ok {
+			return nil, errors.New("Invalid token")
+		}
+
+		role, ok := claims["role"].(string)
+		if !ok {
+			return nil, errors.New("Invalid token")
+		}
 		cookierole, _ := c.Cookie("RLPP")
 		_, err := VerifyCookie(cookierole, role)
 		if err != nil {
@@ -32,5 +44,5 @@ func ExtractAuthToken(c *gin.Context) (*model.Authorize, error) {
 		return &authDetail, nil
 	}
 
-	return nil, err
+	return nil, errors.New("UnAuthorized")
 }

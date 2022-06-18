@@ -114,14 +114,17 @@ func (a *AuthHandler) GetRequestMentoring(c *gin.Context) {
 	mentorid := c.Param("id")
 
 	newmentorid, _ := strconv.Atoi(mentorid)
-	err := a.userService.CreateRequest(memberid, newmentorid)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"status": 500,
-			"error":  err.Error(),
-		})
-		return
-	}
+
+	go func() {
+		err := a.userService.CreateRequest(memberid, newmentorid)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": 500,
+				"error":  err.Error(),
+			})
+			return
+		}
+	}()
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  200,

@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 	"github.com/rg-km/final-project-engineering-11/backend/secure"
@@ -21,11 +20,7 @@ func (r *AuthServiceimpl) UpdateUserById(data *model.UserUpdate, id int, cookiei
 	}
 	data1, _ := r.userRepo.GetByID(ctx, id)
 	alluser, _ := r.userRepo.GetAllUser(ctx)
-	if data1.Username != data.Username {
-		if data1 != nil {
-			fmt.Println("kosong")
-		}
-	}
+
 	if data1.Username != data.Username || data1.Email != data.Email || data1.Phone != data.Phone {
 		for _, user := range alluser {
 			if user.ID != id && user.Username == data.Username {

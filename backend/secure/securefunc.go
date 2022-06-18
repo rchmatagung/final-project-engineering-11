@@ -4,10 +4,13 @@ import (
 	"errors"
 	"time"
 
+	"github.com/andreburgaud/crypt2go/ecb"
+	"github.com/andreburgaud/crypt2go/padding"
 	"github.com/dgrijalva/jwt-go"
 
 	"github.com/rg-km/final-project-engineering-11/backend/config"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/blowfish"
 )
 
 func VerifyPassword(hash string, password string) error {
@@ -78,6 +81,40 @@ func RefreshToken(tokenString string) (string, error) {
 
 		return tokenString, nil
 	}
-
 	return "", errors.New("Token not valid")
+}
+
+func Encrypt(pt, key []byte) string {
+	block, err := blowfish.NewCipher(key)
+	if err != nil {
+		return "error"
+	}
+	mode := ecb.NewECBEncrypter(block)
+	padder := padding.NewPkcs5Padding()
+	pt, err = padder.Pad(pt)
+	if err != nil {
+		return "error"
+	}
+	ct := make([]byte, len(pt))
+	mode.CryptBlocks(ct, pt)
+	return string(ct)
+}
+
+func Decrypt(ct, key []byte) (string, error) {
+	block, err := blowfish.NewCipher(key)
+	if err != nil {
+		return "", errors.New("UnAuthorized")
+	}
+	mode := ecb.NewECBDecrypter(block)
+	pt := make([]byte, len(ct))
+	if len(pt)%8 != 0 {
+		return "", errors.New("UnAuthorized")
+	}
+	mode.CryptBlocks(pt, ct)
+	padder := padding.NewPkcs5Padding()
+	pt, err = padder.Unpad(pt) // unpad plaintext after decryption
+	if err != nil {
+		return "", errors.New("UnAuthorized")
+	}
+	return string(pt), nil
 }
