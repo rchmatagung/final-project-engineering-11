@@ -117,3 +117,24 @@ func (a *AuthServiceimpl) GetRoleByUserName(username string) (string, error) {
 
 	return findUser.Role, nil
 }
+
+func (a *AuthServiceimpl) ArtikelList() ([]*model.ArtikelList, error) {
+	ctx := context.Background()
+	data, err := a.artikelRepo.GetAllArtikel(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if len(data) == 0 {
+		return nil, errors.New("Artikel Belum Tersedia")
+	}
+	return data, nil
+}
+
+func (a *AuthServiceimpl) ArtikelDetail(id int) (*model.ArtikelDetail, error) {
+	ctx := context.Background()
+	data, err := a.artikelRepo.GetArtikelById(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

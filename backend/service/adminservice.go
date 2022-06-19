@@ -19,16 +19,13 @@ func (r *AuthServiceimpl) DeleteById(id int) error {
 
 func (r *AuthServiceimpl) CreateArtikel(artikel *model.Artikel) error {
 	ctx := context.Background()
-	available, err := r.artikelRepo.CheckArtikel(ctx, artikel.Title)
-	if err != nil {
-		return err
-	}
+	available, _ := r.artikelRepo.CheckArtikel(ctx, artikel.Title)
 	if available {
 		return errors.New("Artikel Sudah Terdaftar")
 	}
-	err = r.artikelRepo.CreateArtikel(ctx, artikel)
+	err := r.artikelRepo.CreateArtikel(ctx, artikel)
 	if err != nil {
-		return err
+		return errors.New("Gagal Menambah Artikel")
 	}
 	return nil
 }

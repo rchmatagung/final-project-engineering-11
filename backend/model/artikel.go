@@ -8,12 +8,12 @@ type ArtikelList struct {
 }
 
 type ArtikelDetail struct {
-	Title   string `json:"title"`
+	Title   string `json:"judul"`
 	Date    string `json:"date"`
 	Content string `json:"content"`
 }
 
 type Artikel struct {
-	Title   string `json:"title"`
+	Title   string `json:"judul"`
 	Content string `json:"content"`
 }
