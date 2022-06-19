@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/rg-km/final-project-engineering-11/backend/model"
@@ -28,4 +29,43 @@ func (r *UserRepository) CheckArtikel(ctx context.Context, title string) (bool, 
 		return true, nil
 	}
 	return false, nil
+}
+
+func (r *UserRepository) GetAllArtikel(ctx context.Context) ([]*model.ArtikelList, error) {
+
+	query := `SELECT id, title, content, created_at FROM artikel`
+	rows, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var artikels []*model.ArtikelList
+	for rows.Next() {
+		var artikel model.ArtikelList
+		err := rows.Scan(&artikel.ID, &artikel.Title, &artikel.Content, &artikel.Date)
+		if err != nil {
+			return nil, err
+		}
+		artikels = append(artikels, &artikel)
+	}
+	return artikels, nil
+}
+
+func (r *UserRepository) GetArtikelById(ctx context.Context, id int) (*model.ArtikelDetail, error) {
+	var artikel model.ArtikelDetail
+	query := `SELECT title,created_at, content FROM artikel WHERE id = ?`
+	rows, err := r.db.QueryContext(ctx, query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	if rows.Next() {
+		err := rows.Scan(&artikel.Title, &artikel.Date, &artikel.Content)
+		if err != nil {
+			return nil, err
+		}
+		return &artikel, nil
+	}
+	return &artikel, errors.New("Artikel not found")
 }
