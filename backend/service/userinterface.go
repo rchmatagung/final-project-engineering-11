@@ -13,4 +13,6 @@ type UserService interface {
 	CreateRequest(memberid, mentorid int) error
 	GetAllBookStatusMember(id int) ([]*model.BookListStatus, error)
 	GetRoleByUserName(username string) (string, error)
+	ArtikelList() ([]*model.ArtikelList, error)
+	ArtikelDetail(id int) (*model.ArtikelDetail, error)
 }

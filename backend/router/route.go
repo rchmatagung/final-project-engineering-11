@@ -33,6 +33,8 @@ func Newrouter(authentication *controller.AuthHandler) *Router {
 			auth2.GET("/booking/mentor/:id", authentication.GetRequestMentoring)
 			auth2.GET("/booking/status", authentication.GetAllBookStatusMember)
 			auth2.GET("/mentor/mentorlist", authentication.GetMentor)
+			auth2.GET("/artikel", authentication.GetAllArtikel)
+			auth2.GET("/artikel/:id", authentication.GetArtikelById)
 
 		}
 		auth3 := api.Group("/admin").Use(controller.AuthMiddleware()).Use(controller.AuthMiddlewareAdmin())

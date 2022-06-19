@@ -174,3 +174,38 @@ func (a *AuthHandler) UpdateSatusBooking(c *gin.Context) {
 	})
 
 }
+
+func (a *AuthHandler) GetAllArtikel(c *gin.Context) {
+	data, err := a.userService.ArtikelList()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 200,
+		"data":   data,
+	})
+}
+
+func (a *AuthHandler) GetArtikelById(c *gin.Context) {
+	var id = c.Param("id")
+	newid, _ := strconv.Atoi(id)
+	data, err := a.userService.ArtikelDetail(newid)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status": 404,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 200,
+		"data":   data,
+	})
+
+}
