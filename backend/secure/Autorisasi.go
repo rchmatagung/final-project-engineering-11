@@ -17,7 +17,7 @@ func ExtractAuthToken(c *gin.Context) (*model.Authorize, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
 
 	if ok && token.Valid {
-		id, ok := claims["id"].(float64)
+		id := claims["id"].(float64)
 		if !ok {
 			return nil, errors.New("Invalid token")
 		}

@@ -10,13 +10,14 @@ import (
 )
 
 type AuthServiceimpl struct {
-	userRepo   repository.UserRepo
-	bookRepo   repository.BookRepository
-	mentorRepo repository.MentorRepository
+	userRepo    repository.UserRepo
+	bookRepo    repository.BookRepository
+	mentorRepo  repository.MentorRepository
+	artikelRepo repository.ArtikelInterface
 }
 
-func NewAuthService(userRepo repository.UserRepo, bookRepo repository.BookRepository, mentor repository.MentorRepository) (AuthService, UserService, BookService, AdminService) {
-	return &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}, &AuthServiceimpl{userRepo, bookRepo, mentor}
+func NewAuthService(userRepo repository.UserRepo, bookRepo repository.BookRepository, mentor repository.MentorRepository, artikel repository.ArtikelInterface) (AuthService, UserService, BookService, AdminService) {
+	return &AuthServiceimpl{userRepo, bookRepo, mentor, artikel}, &AuthServiceimpl{userRepo, bookRepo, mentor, artikel}, &AuthServiceimpl{userRepo, bookRepo, mentor, artikel}, &AuthServiceimpl{userRepo, bookRepo, mentor, artikel}
 }
 
 func (a *AuthServiceimpl) Login(loginReq model.PayloadUser) (string, error) {

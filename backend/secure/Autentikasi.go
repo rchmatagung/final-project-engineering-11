@@ -29,11 +29,7 @@ func VerifyToken(c *gin.Context) (*jwt.Token, error) {
 	if len(tokenString) == 0 {
 		return nil, errors.New("Token not found")
 	}
-	tokendecode, err2 := Decrypt([]byte(tokenString), config.KEYPRIVATE)
-	if err2 != nil {
-		return nil, err2
-	}
-	token, err := jwt.Parse(tokendecode, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}

@@ -14,7 +14,5 @@ func main() {
 	db := config.GetConnection()
 	defer db.Close()
 	router := router.Newrouter(controller.NewAuthHandler(service.NewAuthService(repository.NewUserRepository(db))))
-
 	router.Run(":8090")
-
 }

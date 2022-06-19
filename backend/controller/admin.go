@@ -51,3 +51,28 @@ func (a *AuthHandler) DeleteById(c *gin.Context) {
 		"message": "Delete Success",
 	})
 }
+
+func (a *AuthHandler) CreateArtikel(c *gin.Context) {
+	var data model.Artikel
+	if err := c.ShouldBindJSON(&data); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"error":  err.Error(),
+		})
+		return
+	}
+	err := a.adminService.CreateArtikel(&data)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  200,
+		"message": "Berhasil Menambahkan Artikel",
+	})
+
+}

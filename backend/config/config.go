@@ -34,8 +34,6 @@ var Configuration = struct {
 	DB_MAX_IDLE_TIME:        "0",
 }
 
-var KEYPRIVATE = []byte("656#@$$6622)(){]{:^&")
-
 const CONFIG_SMTP_HOST = "smtp.gmail.com"
 const CONFIG_SMTP_PORT = 587
 const CONFIG_SENDER_NAME = "HiCoder Company <hicoder224@gmail.com>"

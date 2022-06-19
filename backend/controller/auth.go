@@ -62,16 +62,18 @@ func (a *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 	hashcookie, _ := secure.HashPassword(Role)
-	///Token JWT di ENCRYPT Agar Tidak Bisa Dibaca Claimsnya
-	newtokenhash := secure.Encrypt([]byte(token), config.KEYPRIVATE)
-	c.SetCookie("token", newtokenhash, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
-	c.SetCookie("id", strconv.Itoa(id), int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
-	c.SetCookie("RLPP", hashcookie, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, true)
+	var data model.Token
+	data.Token = token
+	data.Role = hashcookie
+	data.ID = id
 
+	c.SetCookie("token", token, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
+	c.SetCookie("id", strconv.Itoa(id), int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
+	c.SetCookie("RLPP", hashcookie, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login Success",
-		"token":   newtokenhash,
+		"data":    data,
 	})
 }
 

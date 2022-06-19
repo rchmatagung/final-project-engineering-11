@@ -98,3 +98,9 @@ type UserDetail struct {
 	Email    string `json:"email"`
 	Role     string `json:"role"`
 }
+
+type Token struct {
+	Token string `json:"token"`
+	Role  string `json:"RLPP"`
+	ID    int    `json:"id"`
+}

@@ -2,6 +2,7 @@ package secure
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/andreburgaud/crypt2go/ecb"
@@ -64,24 +65,29 @@ func Verifyid(data int, req int) error {
 }
 
 func RefreshToken(tokenString string) (string, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+	token, err1 := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
 		return []byte(config.Configuration.JWT_SECRET), nil
 	})
-	if err != nil {
-		return "", err
-	}
 
+	if err1 != nil {
+		return "", errors.New("Token Invalid")
+	}
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		timer := time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()
 		claims["exp"] = int(timer)
-		tokenString, err := token.SignedString([]byte(config.Configuration.JWT_SECRET))
+		token1 := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		token2, err := token1.SignedString([]byte(config.Configuration.JWT_SECRET))
 		if err != nil {
 			return "", err
 		}
-
-		return tokenString, nil
+		return token2, nil
 	}
-	return "", errors.New("Token not valid")
+	return "", errors.New("Token Invalid")
 }
 
 func Encrypt(pt, key []byte) string {

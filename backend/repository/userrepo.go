@@ -13,8 +13,8 @@ type UserRepository struct {
 	db *sql.DB
 }
 
-func NewUserRepository(db *sql.DB) (UserRepo, BookRepository, MentorRepository) {
-	return &UserRepository{db}, &UserRepository{db}, &UserRepository{db}
+func NewUserRepository(db *sql.DB) (UserRepo, BookRepository, MentorRepository, ArtikelInterface) {
+	return &UserRepository{db}, &UserRepository{db}, &UserRepository{db}, &UserRepository{db}
 }
 
 func (u *UserRepository) GetAllUser(ctx context.Context) ([]*model.UserList, error) {
