@@ -179,7 +179,7 @@ func (a *AuthHandler) GetAllArtikel(c *gin.Context) {
 	data, err := a.userService.ArtikelList()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"status": 500,
+			"status": 404,
 			"error":  err.Error(),
 		})
 		return

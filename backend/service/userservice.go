@@ -124,6 +124,9 @@ func (a *AuthServiceimpl) ArtikelList() ([]*model.ArtikelList, error) {
 	if err != nil {
 		return nil, err
 	}
+	if len(data) == 0 {
+		return nil, errors.New("Artikel Belum Tersedia")
+	}
 	return data, nil
 }
 
