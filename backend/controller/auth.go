@@ -78,6 +78,8 @@ func (a *AuthHandler) Login(c *gin.Context) {
 }
 
 func (a *AuthHandler) Register(c *gin.Context) {
+	config.Mutex.Lock()
+	defer config.Mutex.Unlock()
 	var register model.UserRegis
 	if err := c.ShouldBindJSON(&register); err != nil {
 		c.JSON(400, gin.H{
@@ -85,11 +87,11 @@ func (a *AuthHandler) Register(c *gin.Context) {
 		})
 		return
 	}
-
 	err := a.authService.Register(register)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"status": 400,
+			"error":  err.Error(),
 		})
 		return
 	}
@@ -98,6 +100,7 @@ func (a *AuthHandler) Register(c *gin.Context) {
 		"status":  200,
 		"message": "Register Success",
 	})
+
 }
 
 func (a *AuthHandler) Logout(c *gin.Context) {

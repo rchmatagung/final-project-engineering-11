@@ -1,6 +1,9 @@
 package config
 
-import "time"
+import (
+	"sync"
+	"time"
+)
 
 var Configuration = struct {
 	JWT_SECRET              string
@@ -39,3 +42,5 @@ const CONFIG_SMTP_PORT = 587
 const CONFIG_SENDER_NAME = "HiCoder Company <hicoder224@gmail.com>"
 const CONFIG_AUTH_EMAIL = "hicoder224@gmail.com"
 const CONFIG_AUTH_PASSWORD = "pkadliooghsdelxk"
+
+var Mutex sync.Mutex

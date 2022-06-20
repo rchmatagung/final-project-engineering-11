@@ -5,10 +5,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rg-km/final-project-engineering-11/backend/config"
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 )
 
 func (a *AuthHandler) RegisMentor(c *gin.Context) {
+	config.Mutex.Lock()
+	defer config.Mutex.Unlock()
 	var data model.MentorRegis
 	if err := c.ShouldBindJSON(&data); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
