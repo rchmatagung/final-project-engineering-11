@@ -15,4 +15,5 @@ type UserService interface {
 	GetRoleByUserName(username string) (string, error)
 	ArtikelList() ([]*model.ArtikelList, error)
 	ArtikelDetail(id int) (*model.ArtikelDetail, error)
+	GetDataMentor(bookid string) (*model.MentorKontak, error)
 }
