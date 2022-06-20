@@ -209,3 +209,20 @@ func (a *AuthHandler) GetArtikelById(c *gin.Context) {
 	})
 
 }
+
+func (a *AuthHandler) GetDataMentor(c *gin.Context) {
+	var nobookid = c.Param("bookid")
+	data, err := a.userService.GetDataMentor(nobookid)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status": 404,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 200,
+		"data":   data,
+	})
+}

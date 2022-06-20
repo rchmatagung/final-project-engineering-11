@@ -138,3 +138,12 @@ func (a *AuthServiceimpl) ArtikelDetail(id int) (*model.ArtikelDetail, error) {
 	}
 	return data, nil
 }
+
+func (a *AuthServiceimpl) GetDataMentor(bookid string) (*model.MentorKontak, error) {
+	ctx := context.Background()
+	data, err := a.mentorRepo.GetDataMentorByNoBooking(ctx, bookid)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

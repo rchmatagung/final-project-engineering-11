@@ -14,4 +14,5 @@ type MentorRepository interface {
 	GetMentorByskill(ctx context.Context, skill string) ([]*model.MentorSkill, error)
 	RegisMentor(ctx context.Context, user *model.MentorRegis) error
 	CheckEmailMentor(ctx context.Context, email string) error
+	GetDataMentorByNoBooking(ctx context.Context, noorder string) (*model.MentorKontak, error)
 }
