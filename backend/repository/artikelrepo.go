@@ -32,42 +32,12 @@ func (r *UserRepository) CheckArtikel(ctx context.Context, title string) (bool, 
 }
 
 func (r *UserRepository) GetAllArtikel(ctx context.Context) ([]*model.ArtikelList, error) {
-<<<<<<< HEAD
-
-	query := `SELECT id, title, content, created_at FROM artikel`
-=======
 	query := `SELECT id, judul, created_at,content FROM artikel`
->>>>>>> feature/admin
 	rows, err := r.db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-<<<<<<< HEAD
-
-	var artikels []*model.ArtikelList
-	for rows.Next() {
-		var artikel model.ArtikelList
-		err := rows.Scan(&artikel.ID, &artikel.Title, &artikel.Content, &artikel.Date)
-		if err != nil {
-			return nil, err
-		}
-		artikels = append(artikels, &artikel)
-	}
-	return artikels, nil
-}
-
-func (r *UserRepository) GetArtikelById(ctx context.Context, id int) (*model.ArtikelDetail, error) {
-	var artikel model.ArtikelDetail
-	query := `SELECT title,created_at, content FROM artikel WHERE id = ?`
-	rows, err := r.db.QueryContext(ctx, query, id)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	if rows.Next() {
-		err := rows.Scan(&artikel.Title, &artikel.Date, &artikel.Content)
-=======
 	var artikel []*model.ArtikelList
 	for rows.Next() {
 		var artikel1 model.ArtikelList
@@ -91,16 +61,11 @@ func (r *UserRepository) GetArtikelById(ctx context.Context, id int) (*model.Art
 	var artikel model.ArtikelDetail
 	if row.Next() {
 		err := row.Scan(&artikel.Title, &artikel.Date, &artikel.Content)
->>>>>>> feature/admin
 		if err != nil {
 			return nil, err
 		}
 		return &artikel, nil
 	}
-<<<<<<< HEAD
-	return &artikel, errors.New("Artikel not found")
-=======
 	return nil, errors.New("Artikel Tidak Ditemukan")
 
->>>>>>> feature/admin
 }
