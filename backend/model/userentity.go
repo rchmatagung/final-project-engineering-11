@@ -104,3 +104,10 @@ type Token struct {
 	Role  string `json:"RLPP"`
 	ID    int    `json:"id"`
 }
+
+type MentorKontak struct {
+	Name    string `json:"name"`
+	Phone   string `json:"phone"`
+	Email   string `json:"email"`
+	Address string `json:"address"`
+}
