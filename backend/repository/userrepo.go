@@ -91,6 +91,7 @@ func (u *UserRepository) CreateUser(ctx context.Context, user *model.UserRegis) 
 }
 
 func (u *UserRepository) UpdateById(ctx context.Context, user *model.UserUpdate, id int) error {
+
 	tx, _ := u.db.Begin()
 	query := "UPDATE users SET username = ?, name = ?, password = ?, address = ?, phone = ?, email = ? WHERE id = ?"
 

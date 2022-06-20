@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 	"github.com/rg-km/final-project-engineering-11/backend/repository"
@@ -46,9 +47,10 @@ func (a *AuthServiceimpl) Login(loginReq model.PayloadUser) (string, error) {
 }
 
 func (a *AuthServiceimpl) Register(register model.UserRegis) error {
-	username, _ := a.userRepo.GetByUsername(context.Background(), register.Username)
-	if username != nil {
-		return errors.New("USERNAME SUDAH TERDAFTAR")
+	data, _ := a.userRepo.GetByUsername(context.Background(), register.Username)
+	fmt.Println(data)
+	if data.Username != "" {
+		return errors.New("Username Sudah Terdaftar")
 	}
 
 	hash, err := secure.HashPassword(register.Password)

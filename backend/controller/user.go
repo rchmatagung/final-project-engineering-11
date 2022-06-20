@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rg-km/final-project-engineering-11/backend/config"
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 )
 
@@ -109,6 +110,8 @@ func (a *AuthHandler) UserProfile(c *gin.Context) {
 }
 
 func (a *AuthHandler) GetRequestMentoring(c *gin.Context) {
+	config.Mutex.Lock()
+	defer config.Mutex.Unlock()
 	var id, _ = c.Cookie("id")
 	memberid, _ := strconv.Atoi(id)
 	mentorid := c.Param("id")
