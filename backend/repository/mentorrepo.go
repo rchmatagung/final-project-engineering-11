@@ -126,3 +126,21 @@ func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorList, e
 	}
 	return mentors, nil
 }
+
+func (u *UserRepository) GetDataMentorByNoBooking(ctx context.Context, noorder string) (*model.MentorKontak, error) {
+	query := "SELECT m.name,m.phone,m.email,m.address FROM bookmentor u INNER JOIN mentor m ON u.mentor_id = m.id WHERE u.bookid = ? AND u.status = ?"
+	rows, err := u.db.QueryContext(ctx, query, noorder, "Accepted")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var mentor model.MentorKontak
+	if rows.Next() {
+		err := rows.Scan(&mentor.Name, &mentor.Phone, &mentor.Email, &mentor.Address)
+		if err != nil {
+			return nil, err
+		}
+		return &mentor, nil
+	}
+	return nil, errors.New("Detail Mentor Tidak ditemukan")
+}
