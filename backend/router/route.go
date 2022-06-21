@@ -16,8 +16,8 @@ func Newrouter(authentication *controller.AuthHandler) *Router {
 		route: gin.Default(),
 	}
 
+	router.route.Use(controller.AllowAll())
 	api := router.route.Group("/api")
-	api.Use(controller.CORSMiddleware())
 	{
 		auth := api.Group("/auth")
 		{

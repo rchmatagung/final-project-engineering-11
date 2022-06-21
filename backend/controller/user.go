@@ -66,7 +66,7 @@ func (a *AuthHandler) UpdateUserById(c *gin.Context) {
 	config.Mutex.Lock()
 	defer config.Mutex.Unlock()
 	var data model.UserUpdate
-	cookid, _ := c.Cookie("id")
+	cookid := c.Request.Header.Get("id")
 	newcookid, _ := strconv.Atoi(cookid)
 	var id = c.Param("id")
 	newid, _ := strconv.Atoi(id)
@@ -94,7 +94,7 @@ func (a *AuthHandler) UpdateUserById(c *gin.Context) {
 }
 
 func (a *AuthHandler) UserProfile(c *gin.Context) {
-	var id, _ = c.Cookie("id")
+	var id = c.Request.Header.Get("id")
 	newid, _ := strconv.Atoi(id)
 	data, err := a.userService.GetUserDataById(newid)
 	if err != nil {
@@ -115,7 +115,7 @@ func (a *AuthHandler) UserProfile(c *gin.Context) {
 func (a *AuthHandler) GetRequestMentoring(c *gin.Context) {
 	config.Mutex.Lock()
 	defer config.Mutex.Unlock()
-	var id, _ = c.Cookie("id")
+	var id = c.Request.Header.Get("id")
 	memberid, _ := strconv.Atoi(id)
 	mentorid := c.Param("id")
 
@@ -143,7 +143,7 @@ func (a *AuthHandler) GetRequestMentoring(c *gin.Context) {
 }
 
 func (a *AuthHandler) GetAllBookStatusMember(c *gin.Context) {
-	var id, _ = c.Cookie("id")
+	var id = c.GetHeader("id")
 	newid, _ := strconv.Atoi(id)
 	data, err := a.userService.GetAllBookStatusMember(newid)
 	if err != nil {

@@ -3,7 +3,7 @@ package secure
 import (
 	"errors"
 	"fmt"
-	"net/http"
+	"strings"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -45,11 +45,14 @@ func VerifyToken(c *gin.Context) (*jwt.Token, error) {
 }
 
 func TakeToken(c *gin.Context) string {
-	keys, err := c.Cookie("token")
-	if err == http.ErrNoCookie {
+	keys := c.GetHeader("Authorization")
+
+	barearkeys := strings.Split(keys, " ")
+
+	if len(barearkeys) > 1 {
+		return barearkeys[1]
+	} else {
 		return ""
 	}
-
-	return keys
 
 }

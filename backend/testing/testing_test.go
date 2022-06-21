@@ -279,7 +279,7 @@ var _ = Describe("Api", func() {
 				db := config.GetConnection1()
 				defer db.Close()
 				router := router.Newrouter(controller.NewAuthHandler(service.NewAuthService(repository.NewUserRepository(db))))
-				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 38
+				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
@@ -310,7 +310,7 @@ var _ = Describe("Api", func() {
 				db := config.GetConnection1()
 				defer db.Close()
 				router := router.Newrouter(controller.NewAuthHandler(service.NewAuthService(repository.NewUserRepository(db))))
-				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 38
+				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)

@@ -30,7 +30,7 @@ func ExtractAuthToken(c *gin.Context) (*model.Authorize, error) {
 		if !ok {
 			return nil, errors.New("Invalid token")
 		}
-		cookierole, _ := c.Cookie("RLPP")
+		cookierole := c.GetHeader("RLPP")
 		_, err := VerifyCookie(cookierole, role)
 		if err != nil {
 			return nil, err

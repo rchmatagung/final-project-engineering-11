@@ -25,10 +25,9 @@ func (a *AuthServiceimpl) Login(loginReq model.PayloadUser) (string, error) {
 	ctx := context.Background()
 	findUser, _ := a.userRepo.GetByUsername(ctx, loginReq.Username)
 
-	if findUser != nil {
+	if findUser.Username != "" {
 		hashPwd := findUser.Password
 		pwd := loginReq.Password
-
 		errhash := secure.VerifyPassword(hashPwd, pwd)
 		if errhash == nil {
 			token, err := secure.GenerateToken(findUser.Username, findUser.ID, findUser.Role)
