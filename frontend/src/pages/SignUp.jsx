@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 const SignUp = () => {
     const [name, setName] = useState('');
@@ -9,6 +10,21 @@ const SignUp = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
 
+    const handleSignup = () => {
+        axios.post('https://3575-111-94-105-165.ap.ngrok.io/api/auth/register', JSON.stringify({
+            username: username, 
+            name: name,
+            password: password,
+            address: address,
+            phone: phoneNumber,
+            email: email,
+        }))
+        .then(res => {
+            console.log(res.data);
+            window.alert("Register Berhasil!")
+          })
+    }
+    
     return (
         <div className="h-full bg-gradient-to-r from-yellow-300 to-yellow-500 pt-1 md:pt-5 pb-6 px-2 md:px-0">
             <div className="max-w-lg mx-auto">
@@ -16,56 +32,62 @@ const SignUp = () => {
             </div>
             <div className='bg-white max-w-lg mx-auto p-8 md:p-12 my-5 rounded-xl shadow-2xl'>
                 <div className="mt-5">
-                    <form className="flex flex-col">
+                    <div className="flex flex-col">
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="name">Nama Lengkap</label>
-                            <input type="text" id="name"
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Nama Lengkap</label>
+                            <input 
+                            type="text" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setName(e.target.value)}
                             />
                         </div>
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="username">Username</label>
-                            <input type="text" id="username"
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Username</label>
+                            <input 
+                            type="text" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="email">Email</label>
-                            <input type="email" id="email"
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Email</label>
+                            <input 
+                            type="email" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="password">Password</label>
-                            <input type="password" id="password" 
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Password</label>
+                            <input 
+                            type="password" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="phone">No. HP</label>
-                            <input type="tel" id="phone"
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">No. HP</label>
+                            <input 
+                            type="tel" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             />
                         </div>
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" for="address">Alamat Domisili</label>
-                            <textarea id="address"
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Alamat Domisili</label>
+                            <textarea 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"
                             onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
                         <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" 
-                        type="submit"
+                            type="submit"
+                            onClick={handleSignup}
                         >Sign In</button>
                         <div className="max-w-lg mx-auto text-center mt-8 mb-3">
-                            <p className="text-grey">Have an account? <Link to={`/signin`} class="text-yellow-400 font-bold hover:underline">Sign In</Link>.</p>
+                            <p className="text-grey">Have an account? <Link to={`/signin`} className="text-yellow-400 font-bold hover:underline">Sign In</Link>.</p>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
