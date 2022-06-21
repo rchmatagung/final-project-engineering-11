@@ -7,6 +7,8 @@ import AboutUsHero from "./components/AboutUsHero"
 import OurTeam from "./components/OurTeam";
 import Footer from "./components/Footer";
 import {Routes, Route} from 'react-router-dom';
+import ProfileCard from './components/ProfileCard';
+import BookingStatus from './components/BookingStatus'
 
 function App() {
   return (
@@ -30,6 +32,14 @@ function App() {
         }/>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/profile" element={
+          <div>
+            <Navbar />
+            <ProfileCard />
+            <BookingStatus />
+            <Footer />
+          </div>
+        }/>
       </Routes>
     </div>
   );
