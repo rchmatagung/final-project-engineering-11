@@ -12,7 +12,7 @@ func SendMail(emailto, BookID, name string) error {
 	mailer := gomail.NewMessage()
 	mailer.SetHeader("From", config.CONFIG_SENDER_NAME)
 	mailer.SetHeader("To", emailto)
-	mailer.SetAddressHeader("Cc", "tralalala@gmail.com", "HiCoder")
+	mailer.SetAddressHeader("Cc", "hicoder224@gmail.com", "HiCoder")
 	mailer.SetHeader("Subject", "Permintaan Mentoring "+BookID)
 	mailer.SetBody("text/html", `<html>
 	<body>

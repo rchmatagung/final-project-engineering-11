@@ -11,7 +11,7 @@ import (
 func (u *UserRepository) RegisMentor(ctx context.Context, user *model.MentorRegis) error {
 
 	query := "INSERT INTO mentor (skill,bio,name,address,phone,email,created_at) VALUES (?,?,?,?,?,?,?)"
-	tx, _ := u.db.Begin()
+	tx, _ := u.Db.Begin()
 
 	_, err := tx.ExecContext(ctx, query, user.Skill, user.Bio, user.Name, user.Address, user.Phone, user.Email, time.Now())
 	if err != nil {
@@ -28,7 +28,7 @@ func (u *UserRepository) GetMentorByskill(ctx context.Context, skill string) ([]
 	var mentors []*model.MentorSkill
 
 	query := "SELECT id,name,bio,skill FROM mentor WHERE skill =?"
-	rows, err := u.db.QueryContext(ctx, query, skill)
+	rows, err := u.Db.QueryContext(ctx, query, skill)
 	if err != nil {
 		return nil, errors.New("Error getting mentor")
 	}
@@ -46,7 +46,7 @@ func (u *UserRepository) GetMentorByskill(ctx context.Context, skill string) ([]
 }
 
 func (u *UserRepository) CheckEmailMentor(ctx context.Context, email string) error {
-	rows, err := u.db.QueryContext(ctx, "SELECT id from mentor where email = ?", email)
+	rows, err := u.Db.QueryContext(ctx, "SELECT id from mentor where email = ?", email)
 
 	if err != nil {
 		return errors.New("Error Server")
@@ -63,7 +63,7 @@ func (u *UserRepository) GetMentorById(ctx context.Context, id int) (*model.Ment
 	query := "SELECT id,name,skill,bio FROM mentor WHERE id = ?"
 
 	var mentor model.MentorDetail
-	rows, err := u.db.QueryContext(ctx, query, id)
+	rows, err := u.Db.QueryContext(ctx, query, id)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (u *UserRepository) GetMentorById(ctx context.Context, id int) (*model.Ment
 func (u *UserRepository) GetMentorEmailById(ctx context.Context, id int) (string, error) {
 	query := "SELECT email FROM mentor WHERE id = ?"
 	var email string
-	err := u.db.QueryRowContext(ctx, query, id).Scan(&email)
+	err := u.Db.QueryRowContext(ctx, query, id).Scan(&email)
 	if err != nil {
 		return "", err
 	}
@@ -90,7 +90,7 @@ func (u *UserRepository) GetMentorEmailById(ctx context.Context, id int) (string
 }
 
 func (u *UserRepository) CheckMentorBySkill(ctx context.Context, skill string) error {
-	rows, err := u.db.QueryContext(ctx, "SELECT id from mentor where skill = ?", skill)
+	rows, err := u.Db.QueryContext(ctx, "SELECT id from mentor where skill = ?", skill)
 
 	if err != nil {
 		return err
@@ -111,7 +111,7 @@ func (u *UserRepository) CheckMentorBySkill(ctx context.Context, skill string) e
 func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorList, error) {
 	var mentors []*model.MentorList
 	query := "SELECT id,name,skill FROM mentor"
-	rows, err := u.db.QueryContext(ctx, query)
+	rows, err := u.Db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorList, e
 
 func (u *UserRepository) GetDataMentorByNoBooking(ctx context.Context, noorder string) (*model.MentorKontak, error) {
 	query := "SELECT m.name,m.phone,m.email,m.address FROM bookmentor u INNER JOIN mentor m ON u.mentor_id = m.id WHERE u.bookid = ? AND u.status = ?"
-	rows, err := u.db.QueryContext(ctx, query, noorder, "Accepted")
+	rows, err := u.Db.QueryContext(ctx, query, noorder, "Accepted")
 	if err != nil {
 		return nil, err
 	}

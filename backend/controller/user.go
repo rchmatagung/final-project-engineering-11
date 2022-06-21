@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-11/backend/config"
@@ -62,6 +63,8 @@ func (a *AuthHandler) DetailMentor(c *gin.Context) {
 }
 
 func (a *AuthHandler) UpdateUserById(c *gin.Context) {
+	config.Mutex.Lock()
+	defer config.Mutex.Unlock()
 	var data model.UserUpdate
 	cookid, _ := c.Cookie("id")
 	newcookid, _ := strconv.Atoi(cookid)
@@ -117,18 +120,21 @@ func (a *AuthHandler) GetRequestMentoring(c *gin.Context) {
 	mentorid := c.Param("id")
 
 	newmentorid, _ := strconv.Atoi(mentorid)
-
+	wg := sync.WaitGroup{}
+	wg.Add(1)
 	go func() {
 		err := a.userService.CreateRequest(memberid, newmentorid)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"status": 500,
+			c.JSON(http.StatusNotFound, gin.H{
+				"status": 404,
 				"error":  err.Error(),
 			})
+			wg.Done()
 			return
 		}
+		wg.Done()
 	}()
-
+	wg.Wait()
 	c.JSON(http.StatusOK, gin.H{
 		"status":  200,
 		"message": "Berhasil Mengirim Request",

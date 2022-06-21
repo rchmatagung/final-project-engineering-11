@@ -10,7 +10,7 @@ import (
 )
 
 type UserRepository struct {
-	db *sql.DB
+	Db *sql.DB
 }
 
 func NewUserRepository(db *sql.DB) (UserRepo, BookRepository, MentorRepository, ArtikelInterface) {
@@ -20,7 +20,7 @@ func NewUserRepository(db *sql.DB) (UserRepo, BookRepository, MentorRepository, 
 func (u *UserRepository) GetAllUser(ctx context.Context) ([]*model.UserList, error) {
 	var users []*model.UserList
 	query := "SELECT id,username,name,role,address,phone,email,created_at FROM users"
-	rows, err := u.db.QueryContext(ctx, query)
+	rows, err := u.Db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func (u *UserRepository) GetAllUser(ctx context.Context) ([]*model.UserList, err
 
 func (u *UserRepository) GetByID(ctx context.Context, id int) (*model.UserDetail, error) {
 	var user model.UserDetail
-	rows, err := u.db.QueryContext(ctx, "SELECT id,username,name, password,role,address,phone,email FROM users WHERE id = ?", id)
+	rows, err := u.Db.QueryContext(ctx, "SELECT id,username,name, password,role,address,phone,email FROM users WHERE id = ?", id)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (u *UserRepository) GetByID(ctx context.Context, id int) (*model.UserDetail
 
 func (u *UserRepository) GetByUsername(ctx context.Context, username string) (*model.User, error) {
 	var user model.User
-	rows, err := u.db.QueryContext(ctx, "SELECT id,username,name,password,role,address,phone,email,created_at FROM users WHERE username = ?", username)
+	rows, err := u.Db.QueryContext(ctx, "SELECT id,username,name,password,role,address,phone,email,created_at FROM users WHERE username = ?", username)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (u *UserRepository) GetByUsername(ctx context.Context, username string) (*m
 
 func (u *UserRepository) CreateUser(ctx context.Context, user *model.UserRegis) error {
 
-	tx, _ := u.db.Begin()
+	tx, _ := u.Db.Begin()
 
 	Role := "member"
 	query := "INSERT INTO users (username,name,password,role,address,phone,email,created_at) VALUES (?,?,?,?,?,?,?,?)"
@@ -92,7 +92,7 @@ func (u *UserRepository) CreateUser(ctx context.Context, user *model.UserRegis) 
 
 func (u *UserRepository) UpdateById(ctx context.Context, user *model.UserUpdate, id int) error {
 
-	tx, _ := u.db.Begin()
+	tx, _ := u.Db.Begin()
 	query := "UPDATE users SET username = ?, name = ?, password = ?, address = ?, phone = ?, email = ? WHERE id = ?"
 
 	res, err := tx.ExecContext(ctx, query, user.Username, user.Name, user.Password, user.Address, user.Phone, user.Email, id)
@@ -111,7 +111,7 @@ func (u *UserRepository) UpdateById(ctx context.Context, user *model.UserUpdate,
 }
 
 func (u *UserRepository) DeleteUserById(ctx context.Context, id int) error {
-	tx, err := u.db.Begin()
+	tx, err := u.Db.Begin()
 	if err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func (u *UserRepository) DeleteUserById(ctx context.Context, id int) error {
 
 func (u *UserRepository) FetchUserByRole(ctx context.Context, role string) ([]*model.UserList, error) {
 	var users []*model.UserList
-	rows, err := u.db.QueryContext(ctx, "SELECT id,username,role,created_at FROM users WHERE role = ?", role)
+	rows, err := u.Db.QueryContext(ctx, "SELECT id,username,role,created_at FROM users WHERE role = ?", role)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (u *UserRepository) FetchUserByRole(ctx context.Context, role string) ([]*m
 func (u *UserRepository) GetIdByUserName(ctx context.Context, username string) (int, error) {
 	query := "SELECT id FROM users WHERE username = ?"
 	var id int
-	err := u.db.QueryRowContext(ctx, query, username).Scan(&id)
+	err := u.Db.QueryRowContext(ctx, query, username).Scan(&id)
 	if err != nil {
 		return 0, err
 	}
