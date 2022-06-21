@@ -11,7 +11,7 @@ import (
 func (u *UserRepository) GetAllBookid(ctx context.Context) ([]*model.BookMentor, error) {
 	var bookids []*model.BookMentor
 	query := "SELECT id,bookid,user_id,mentor_id,status,created_at FROM bookmentor"
-	rows, err := u.db.QueryContext(ctx, query)
+	rows, err := u.Db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (u *UserRepository) GetAllBookid(ctx context.Context) ([]*model.BookMentor,
 func (u *UserRepository) GetAllBookStatusMemberId(ctx context.Context, userid int) ([]*model.BookListStatus, error) {
 	query := "SELECT u.bookid,u.status,m.name FROM bookmentor u INNER JOIN mentor m ON u.mentor_id = m.id WHERE u.member_id = ?"
 	var bookids []*model.BookListStatus
-	rows, err := u.db.QueryContext(ctx, query, userid)
+	rows, err := u.Db.QueryContext(ctx, query, userid)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (u *UserRepository) GetAllBookStatusMemberId(ctx context.Context, userid in
 
 func (u *UserRepository) CreateRequest(ctx context.Context, userid, mentorid int, bookid string) error {
 	query := "INSERT INTO bookmentor(member_id,mentor_id,bookid,status,created_at) VALUES (?,?,?,?,?)"
-	tx, _ := u.db.Begin()
+	tx, _ := u.Db.Begin()
 	_, err := tx.ExecContext(ctx, query, userid, mentorid, bookid, "Waiting", time.Now())
 	if err != nil {
 		tx.Rollback()
@@ -63,7 +63,7 @@ func (u *UserRepository) CreateRequest(ctx context.Context, userid, mentorid int
 
 func (a *UserRepository) UpdateStatusBooking(ctx context.Context, bookid string) error {
 	query := "UPDATE bookmentor SET status = ? WHERE bookid = ?"
-	tx, _ := a.db.Begin()
+	tx, _ := a.Db.Begin()
 	_, err := tx.ExecContext(ctx, query, "Accepted", bookid)
 	if err != nil {
 		tx.Rollback()
@@ -76,7 +76,7 @@ func (a *UserRepository) UpdateStatusBooking(ctx context.Context, bookid string)
 func (a *UserRepository) CheckAvailableBookId(ctx context.Context, bookid string) bool {
 
 	query := "SELECT * FROM bookmentor WHERE bookid = ?"
-	rows, err := a.db.QueryContext(ctx, query, bookid)
+	rows, err := a.Db.QueryContext(ctx, query, bookid)
 	if err != nil {
 		return false
 	}
@@ -88,7 +88,7 @@ func (a *UserRepository) CheckAvailableBookId(ctx context.Context, bookid string
 }
 func (a *UserRepository) CheckRowsBookId(ctx context.Context) int {
 	query := "SELECT * FROM bookmentor"
-	rows, err := a.db.QueryContext(ctx, query)
+	rows, err := a.Db.QueryContext(ctx, query)
 	if err != nil {
 		return 0
 	}

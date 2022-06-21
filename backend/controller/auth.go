@@ -22,6 +22,8 @@ func NewAuthHandler(authService service.AuthService, userService service.UserSer
 	return &AuthHandler{authService, userService, bookService, adminService}
 }
 func (a *AuthHandler) Login(c *gin.Context) {
+	config.Mutex.Lock()
+	defer config.Mutex.Unlock()
 	var loginReq model.PayloadUser
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		c.JSON(400, gin.H{
@@ -70,6 +72,7 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	c.SetCookie("token", token, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
 	c.SetCookie("id", strconv.Itoa(id), int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
 	c.SetCookie("RLPP", hashcookie, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
+
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login Success",
@@ -105,9 +108,6 @@ func (a *AuthHandler) Register(c *gin.Context) {
 
 func (a *AuthHandler) Logout(c *gin.Context) {
 	c.Header("Authorization", "")
-	c.SetCookie("RLPP", "", -1, "/", "localhost", false, true)
-	c.SetCookie("token", "", -1, "/", "localhost", false, true)
-	c.SetCookie("id", "", -1, "/", "localhost", false, true)
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Logout Success",

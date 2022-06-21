@@ -1,6 +1,8 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-11/backend/controller"
 )
@@ -14,8 +16,8 @@ func Newrouter(authentication *controller.AuthHandler) *Router {
 		route: gin.Default(),
 	}
 
+	router.route.Use(controller.AllowAll())
 	api := router.route.Group("/api")
-	api.Use(controller.CORSMiddleware())
 	{
 		auth := api.Group("/auth")
 		{
@@ -54,4 +56,8 @@ func Newrouter(authentication *controller.AuthHandler) *Router {
 
 func (a *Router) Run(port string) {
 	a.route.Run(port)
+}
+
+func (a *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	a.route.ServeHTTP(w, r)
 }
