@@ -28,7 +28,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 
 		}
-		id := c.Request.Header.Get("id")
+		id := c.GetHeader("id")
 		newid, _ := strconv.Atoi(id)
 		err2 := secure.Verifyid(newid, res.ID)
 		if err2 != nil {
@@ -45,7 +45,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 func AuthMiddlewareAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie := c.Request.Header.Get("RLPP")
+		cookie := c.GetHeader("RLPP")
 		if cookie == "" {
 			c.JSON(401, gin.H{
 				"status": 401,

@@ -1,6 +1,8 @@
 package service
 
-import "github.com/rg-km/final-project-engineering-11/backend/model"
+import (
+	"github.com/rg-km/final-project-engineering-11/backend/model"
+)
 
 type UserService interface {
 	UpdateUserById(data *model.UserUpdate, id int, cookieid int) error
@@ -10,10 +12,10 @@ type UserService interface {
 	GetMentorById(id int) (*model.MentorDetail, error)
 	GetUserDataById(id int) (*model.UserDetail, error)
 	GetIdByUserName(username string) (int, error)
-	CreateRequest(memberid, mentorid int) error
 	GetAllBookStatusMember(id int) ([]*model.BookListStatus, error)
 	GetRoleByUserName(username string) (string, error)
 	ArtikelList() ([]*model.ArtikelList, error)
 	ArtikelDetail(id int) (*model.ArtikelDetail, error)
 	GetDataMentor(bookid string) (*model.MentorKontak, error)
+	CheckMentorAvailable(id int) bool
 }

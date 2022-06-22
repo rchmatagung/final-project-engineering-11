@@ -147,3 +147,12 @@ func (a *AuthServiceimpl) GetDataMentor(bookid string) (*model.MentorKontak, err
 	}
 	return data, nil
 }
+
+func (a *AuthServiceimpl) CheckMentorAvailable(id int) bool {
+	ctx := context.Background()
+	data, _ := a.mentorRepo.GetMentorById(ctx, id)
+	if data == nil {
+		return false
+	}
+	return true
+}
