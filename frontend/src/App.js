@@ -9,6 +9,9 @@ import Footer from "./components/Footer";
 import {Routes, Route} from 'react-router-dom';
 import ProfileCard from './components/ProfileCard';
 import BookingStatus from './components/BookingStatus'
+import Listmentor from './components/Findmentor/Listmentor';
+// import Listrole from './components/Findmentor/Listrole';
+// import Search from './components/Searchbar/Search';
 
 function App() {
   return (
@@ -28,6 +31,15 @@ function App() {
             <AboutUsHero />
             <OurTeam />
             <Footer />
+          </div>
+        }/>
+        <Route path="/findmentor" element={
+          <div>
+            <Navbar />
+            {/* <Search/>
+            <Listrole/> */}
+            <Listmentor/>
+            <Footer/>
           </div>
         }/>
         <Route path="/signin" element={<SignIn />} />
