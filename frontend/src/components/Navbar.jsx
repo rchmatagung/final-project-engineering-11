@@ -40,7 +40,7 @@ export default function Navbar() {
             </ul>
             <div className="flex flex-col md:flex-row md:justify-end">
                 <Link to={`/signup`} className="rounded-lg bg-yellow-500 px-5 py-3 hover:font-bold">Sign Up</Link>
-                <Link to={`/signin`} className="px-5 py-3 hover:font-bold">Sign Up</Link>
+                <Link to={`/signin`} className="px-5 py-3 hover:font-bold">Sign In</Link>
             </div>
           </div>
         </div>
