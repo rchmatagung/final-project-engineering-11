@@ -2,7 +2,6 @@ package controller
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-11/backend/config"
@@ -68,10 +67,9 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	data.Token = token
 	data.Role = hashcookie
 	data.ID = id
-
-	c.SetCookie("token", token, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
-	c.SetCookie("id", strconv.Itoa(id), int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
-	c.SetCookie("RLPP", hashcookie, int(time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()), "/", "localhost", false, false)
+	c.Writer.Header().Set("Authorization", token)
+	c.Writer.Header().Set("RLPP", hashcookie)
+	c.Writer.Header().Set("id", strconv.Itoa(id))
 
 	c.JSON(200, gin.H{
 		"status":  200,

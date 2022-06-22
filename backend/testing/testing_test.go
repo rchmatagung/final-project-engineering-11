@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"net/http"
 	"net/http/httptest"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -123,15 +122,19 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
+
 				r := httptest.NewRequest("GET", "/api/user/profile", nil)
 				w := httptest.NewRecorder()
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				userdata := UserProfileTesting{}
 				json.NewDecoder(w.Body).Decode(&userdata)
@@ -178,16 +181,19 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("GET", "/api/user/mentor/detail/4", nil)
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				user := UserMentorDetailTesting{}
 				json.NewDecoder(w.Body).Decode(&user)
@@ -204,16 +210,19 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("GET", "/api/user/mentor/detail/5", nil)
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				Expect(w.Result().StatusCode).To(Equal(404))
 			})
@@ -251,10 +260,13 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login/", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 				data2 := `{
 					"username" : "satrio44",
 					"name" : "satriowibowo",
@@ -265,9 +277,10 @@ var _ = Describe("Api", func() {
 					}`
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("PUT", "/api/user/update/1", bytes.NewBuffer([]byte(data2)))
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				Expect(w.Result().StatusCode).To(Equal(401))
 			})
@@ -283,10 +296,13 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 				data2 := `{
 					"username" : "satrio444",
 					"name" :  "satriowibowo",
@@ -297,9 +313,9 @@ var _ = Describe("Api", func() {
 					}`
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("PUT", "/api/user/update/2", bytes.NewBuffer([]byte(data2)))
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				Expect(w.Result().StatusCode).To(Equal(200))
 			})
@@ -314,17 +330,20 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 				mentorstruct := repository.UserRepository{Db: db}
 				resmentor, _ := mentorstruct.MentorList(context.Background())
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("GET", "/api/user/mentor/mentorlist", nil)
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				mentorrespon := MentorListTesting{}
 				json.NewDecoder(w.Body).Decode(&mentorrespon)
@@ -343,17 +362,20 @@ var _ = Describe("Api", func() {
 					wr := httptest.NewRecorder()
 					rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 					router.ServeHTTP(wr, rs)
-					var cookie []*http.Cookie
-					for _, c := range wr.Result().Cookies() {
-						cookie = append(cookie, c)
-					}
+					var Headerres []string
+					token := wr.Result().Header.Get("Authorization")
+					role := wr.Result().Header.Get("RLPP")
+					id := wr.Result().Header.Get("id")
+					Headerres = append(Headerres, token)
+					Headerres = append(Headerres, role)
+					Headerres = append(Headerres, id)
 					mentorstruct := repository.UserRepository{Db: db}
 					resmentor, _ := mentorstruct.GetMentorByskill(context.Background(), "Backend")
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/mentor/mentorlist?skill=Backend", nil)
-					for _, c := range cookie {
-						r.AddCookie(c)
-					}
+					r.Header.Set("Authorization", `bearer `+Headerres[0])
+					r.Header.Set("RLPP", Headerres[1])
+					r.Header.Set("id", Headerres[2])
 					router.ServeHTTP(w, r)
 					mentorrespon := MentorSkillTesting{}
 					json.NewDecoder(w.Body).Decode(&mentorrespon)
@@ -373,16 +395,19 @@ var _ = Describe("Api", func() {
 					wr := httptest.NewRecorder()
 					rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 					router.ServeHTTP(wr, rs)
-					var cookie []*http.Cookie
-					for _, c := range wr.Result().Cookies() {
-						cookie = append(cookie, c)
-					}
+					var Headerres []string
+					token := wr.Result().Header.Get("Authorization")
+					role := wr.Result().Header.Get("RLPP")
+					id := wr.Result().Header.Get("id")
+					Headerres = append(Headerres, token)
+					Headerres = append(Headerres, role)
+					Headerres = append(Headerres, id)
 
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/mentor/mentorlist?skill=Network", nil)
-					for _, c := range cookie {
-						r.AddCookie(c)
-					}
+					r.Header.Set("Authorization", `bearer `+Headerres[0])
+					r.Header.Set("RLPP", Headerres[1])
+					r.Header.Set("id", Headerres[2])
 					router.ServeHTTP(w, r)
 					mentorrespon := MentorSkillTesting{}
 					json.NewDecoder(w.Body).Decode(&mentorrespon)
@@ -404,15 +429,19 @@ var _ = Describe("Api", func() {
 					wr := httptest.NewRecorder()
 					rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 					router.ServeHTTP(wr, rs)
-					var cookie []*http.Cookie
-					for _, c := range wr.Result().Cookies() {
-						cookie = append(cookie, c)
-					}
+					var Headerres []string
+					token := wr.Result().Header.Get("Authorization")
+					role := wr.Result().Header.Get("RLPP")
+					id := wr.Result().Header.Get("id")
+					Headerres = append(Headerres, token)
+					Headerres = append(Headerres, role)
+					Headerres = append(Headerres, id)
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/booking/mentor/2", nil)
-					for _, c := range cookie {
-						r.AddCookie(c)
-					}
+
+					r.Header.Set("Authorization", `bearer `+Headerres[0])
+					r.Header.Set("RLPP", Headerres[1])
+					r.Header.Set("id", Headerres[2])
 					router.ServeHTTP(w, r)
 					res := GeneralTesting{}
 					json.NewDecoder(w.Body).Decode(&res)
@@ -430,15 +459,19 @@ var _ = Describe("Api", func() {
 					wr := httptest.NewRecorder()
 					rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 					router.ServeHTTP(wr, rs)
-					var cookie []*http.Cookie
-					for _, c := range wr.Result().Cookies() {
-						cookie = append(cookie, c)
-					}
+					var Headerres []string
+					token := wr.Result().Header.Get("Authorization")
+					role := wr.Result().Header.Get("RLPP")
+					id := wr.Result().Header.Get("id")
+					Headerres = append(Headerres, token)
+					Headerres = append(Headerres, role)
+					Headerres = append(Headerres, id)
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/booking/mentor/9", nil) //tidak ada mentor dengan id 9
-					for _, c := range cookie {
-						r.AddCookie(c)
-					}
+
+					r.Header.Set("Authorization", `bearer `+Headerres[0])
+					r.Header.Set("RLPP", Headerres[1])
+					r.Header.Set("id", Headerres[2])
 					router.ServeHTTP(w, r)
 					res := GeneralErrorTesting{}
 					json.NewDecoder(w.Body).Decode(&res)
@@ -460,15 +493,18 @@ var _ = Describe("Api", func() {
 				wr := httptest.NewRecorder()
 				rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 				router.ServeHTTP(wr, rs)
-				var cookie []*http.Cookie
-				for _, c := range wr.Result().Cookies() {
-					cookie = append(cookie, c)
-				}
+				var Headerres []string
+				token := wr.Result().Header.Get("Authorization")
+				role := wr.Result().Header.Get("RLPP")
+				id := wr.Result().Header.Get("id")
+				Headerres = append(Headerres, token)
+				Headerres = append(Headerres, role)
+				Headerres = append(Headerres, id)
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("GET", "/api/user/booking/status", nil)
-				for _, c := range cookie {
-					r.AddCookie(c)
-				}
+				r.Header.Set("Authorization", `bearer `+Headerres[0])
+				r.Header.Set("RLPP", Headerres[1])
+				r.Header.Set("id", Headerres[2])
 				router.ServeHTTP(w, r)
 				res := StatusBookTesting{}
 				json.NewDecoder(w.Body).Decode(&res)
@@ -490,15 +526,18 @@ var _ = Describe("Api", func() {
 					router.ServeHTTP(wr, rs)
 					repodata := repository.UserRepository{Db: db}
 					resdata, _ := repodata.GetAllArtikel(context.Background())
-					var cookie []*http.Cookie
-					for _, c := range wr.Result().Cookies() {
-						cookie = append(cookie, c)
-					}
+					var Headerres []string
+					token := wr.Result().Header.Get("Authorization")
+					role := wr.Result().Header.Get("RLPP")
+					id := wr.Result().Header.Get("id")
+					Headerres = append(Headerres, token)
+					Headerres = append(Headerres, role)
+					Headerres = append(Headerres, id)
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/artikel", nil)
-					for _, c := range cookie {
-						r.AddCookie(c)
-					}
+					r.Header.Set("Authorization", `bearer `+Headerres[0])
+					r.Header.Set("RLPP", Headerres[1])
+					r.Header.Set("id", Headerres[2])
 					router.ServeHTTP(w, r)
 					res := ArtikelTesting{}
 					json.NewDecoder(w.Body).Decode(&res)
@@ -519,15 +558,18 @@ var _ = Describe("Api", func() {
 						router.ServeHTTP(wr, rs)
 						repodata := repository.UserRepository{Db: db}
 						resdata, _ := repodata.GetArtikelById(context.Background(), 1)
-						var cookie []*http.Cookie
-						for _, c := range wr.Result().Cookies() {
-							cookie = append(cookie, c)
-						}
+						var Headerres []string
+						token := wr.Result().Header.Get("Authorization")
+						role := wr.Result().Header.Get("RLPP")
+						id := wr.Result().Header.Get("id")
+						Headerres = append(Headerres, token)
+						Headerres = append(Headerres, role)
+						Headerres = append(Headerres, id)
 						w := httptest.NewRecorder()
 						r := httptest.NewRequest("GET", "/api/user/artikel/1", nil)
-						for _, c := range cookie {
-							r.AddCookie(c)
-						}
+						r.Header.Set("Authorization", `bearer `+Headerres[0])
+						r.Header.Set("RLPP", Headerres[1])
+						r.Header.Set("id", Headerres[2])
 						router.ServeHTTP(w, r)
 						res := ArtikelDetailTesting{}
 						json.NewDecoder(w.Body).Decode(&res)
@@ -546,15 +588,18 @@ var _ = Describe("Api", func() {
 						wr := httptest.NewRecorder()
 						rs := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
 						router.ServeHTTP(wr, rs)
-						var cookie []*http.Cookie
-						for _, c := range wr.Result().Cookies() {
-							cookie = append(cookie, c)
-						}
+						var Headerres []string
+						token := wr.Result().Header.Get("Authorization")
+						role := wr.Result().Header.Get("RLPP")
+						id := wr.Result().Header.Get("id")
+						Headerres = append(Headerres, token)
+						Headerres = append(Headerres, role)
+						Headerres = append(Headerres, id)
 						w := httptest.NewRecorder()
 						r := httptest.NewRequest("GET", "/api/user/artikel/9", nil) // tidak ada
-						for _, c := range cookie {
-							r.AddCookie(c)
-						}
+						r.Header.Set("Authorization", `bearer `+Headerres[0])
+						r.Header.Set("RLPP", Headerres[1])
+						r.Header.Set("id", Headerres[2])
 						router.ServeHTTP(w, r)
 						Expect(w.Result().StatusCode).To(Equal(404))
 					})

@@ -48,7 +48,6 @@ func TakeToken(c *gin.Context) string {
 	keys := c.GetHeader("Authorization")
 
 	barearkeys := strings.Split(keys, " ")
-
 	if len(barearkeys) > 1 {
 		return barearkeys[1]
 	} else {
