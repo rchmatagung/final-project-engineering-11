@@ -70,7 +70,6 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	c.Writer.Header().Set("Authorization", token)
 	c.Writer.Header().Set("RLPP", hashcookie)
 	c.Writer.Header().Set("id", strconv.Itoa(id))
-
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login Success",
@@ -110,10 +109,6 @@ func (a *AuthHandler) Logout(c *gin.Context) {
 		"status":  200,
 		"message": "Logout Success",
 	})
-}
-
-type Token struct {
-	Id int `json:"id"`
 }
 
 // func (a *AuthHandler) RefreshToken(c *gin.Context) {

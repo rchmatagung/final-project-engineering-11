@@ -19,12 +19,6 @@ func SendMail(emailto, BookID, name string) error {
 	   <h1>Hi `+name+` Anda Mendapatkan Request Mentoring</h1>
        <p>Jika anda ingin menerima mentoring klik gambar ceklis dan jika anda menolak silahkan anda klik gambar silang!!</p>
        <br>
-      
-          <a href="http://localhost:8090/api/mentor/acc/`+BookID+`"> 
-		  <img alt="Qries" src="https://w7.pngwing.com/pngs/412/774/png-transparent-red-mark-cross-crossed-wrong-incorrect-sign-symbol-icon.png"
-		  width="90" height="70">
-	   </a>
-       &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 	   <a href="http://localhost:8090/api/mentor/acc/`+BookID+`">
 		  <img alt="Qries" src="https://www.pngitem.com/pimgs/m/423-4236368_icon-ceklis-png-transparent-png.png"
 		  width=150" height="80">

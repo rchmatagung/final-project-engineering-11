@@ -8,31 +8,15 @@ import (
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 )
 
-func (r *AuthServiceimpl) CreateRequest(memberid, mentorid int) error {
+func (r *AuthServiceimpl) CreateRequest(memberid, mentorid int) {
 	ctx := context.Background()
-	mentorEmail, err1 := r.mentorRepo.GetMentorEmailById(ctx, mentorid)
-	mentorname, err2 := r.mentorRepo.GetMentorById(ctx, mentorid)
-
-	if err2 != nil {
-		return err2
-	}
-
-	if err1 != nil {
-		return err1
-	}
+	mentorEmail, _ := r.mentorRepo.GetMentorEmailById(ctx, mentorid)
+	mentorname, _ := r.mentorRepo.GetMentorById(ctx, mentorid)
 	data := r.bookRepo.CheckRowsBookId(ctx)
 	bookid := mail.CreateBookId(data)
-	err3 := mail.SendMail(mentorEmail, bookid, mentorname.Name)
-	if err3 != nil {
-		return errors.New("Gagal Mengirim Email")
-	}
+	_ = mail.SendMail(mentorEmail, bookid, mentorname.Name)
 
-	err := r.bookRepo.CreateRequest(ctx, memberid, mentorid, bookid)
-	if err != nil {
-		return errors.New("Gagal Membuat Request")
-	}
-
-	return nil
+	_ = r.bookRepo.CreateRequest(ctx, memberid, mentorid, bookid)
 
 }
 

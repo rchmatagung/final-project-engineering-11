@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http/httptest"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -438,7 +439,6 @@ var _ = Describe("Api", func() {
 					Headerres = append(Headerres, id)
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/booking/mentor/2", nil)
-
 					r.Header.Set("Authorization", `bearer `+Headerres[0])
 					r.Header.Set("RLPP", Headerres[1])
 					r.Header.Set("id", Headerres[2])
@@ -468,7 +468,6 @@ var _ = Describe("Api", func() {
 					Headerres = append(Headerres, id)
 					w := httptest.NewRecorder()
 					r := httptest.NewRequest("GET", "/api/user/booking/mentor/9", nil) //tidak ada mentor dengan id 9
-
 					r.Header.Set("Authorization", `bearer `+Headerres[0])
 					r.Header.Set("RLPP", Headerres[1])
 					r.Header.Set("id", Headerres[2])
@@ -477,6 +476,7 @@ var _ = Describe("Api", func() {
 					json.NewDecoder(w.Body).Decode(&res)
 					Expect(w.Result().StatusCode).To(Equal(404))
 					Expect(res.Message).To(Equal("Mentor not found"))
+					fmt.Println(res.Message)
 
 				})
 			})
@@ -545,7 +545,6 @@ var _ = Describe("Api", func() {
 					Expect(res.Data).To(Equal(resdata))
 				})
 			})
-
 			Describe("/api/user/artikel/:id", func() {
 				When("Terdapat Artikel Dengan Id Yang Sama Dengan Query Param", func() {
 					It("Mengembalikan Artikel Dengan Id Yang Sama Dengan Query Param Dan Mengembailkan 200", func() {
