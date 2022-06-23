@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 const SignUp = () => {
@@ -9,9 +9,10 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
+    const nav = useNavigate();
 
-    const handleSignup = () => {
-        axios.post('https://70ef-111-94-87-54.ap.ngrok.io/api/auth/register', JSON.stringify({
+    const handleSignup = async () => {
+        await axios.post('https://7b51-111-94-105-152.ap.ngrok.io/api/auth/register', JSON.stringify({
             username: username, 
             name: name,
             password: password,
@@ -21,9 +22,9 @@ const SignUp = () => {
         }))
         .then(res => {
             console.log(res.data);
-            window.alert("Register Berhasil!")
+            nav("/signin")
           })
-    }
+      }
     
     return (
         <div className="h-full bg-gradient-to-r from-yellow-300 to-yellow-500 pt-1 md:pt-5 pb-6 px-2 md:px-0">
@@ -34,7 +35,7 @@ const SignUp = () => {
                 <div className="mt-5">
                     <div className="flex flex-col">
                         <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">Nama Lengkap</label>
+                            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" >Nama Lengkap</label>
                             <input 
                             type="text" 
                             className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-yellow-400 transition duration-500 px-3 pb-3"

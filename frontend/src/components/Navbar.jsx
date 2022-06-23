@@ -1,10 +1,28 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import logoImg from '../assets/logohi.png'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../api/api'
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const token = localStorage.getItem('token');
+  const nav = useNavigate();
+
+  const logout = async () => {
+      try {
+        await api.post('/auth/logout')
+        .then((res) => {
+          console.log(res)
+          localStorage.removeItem('token');
+          localStorage.removeItem('RLPP');
+          localStorage.removeItem('id');
+          nav("/")
+      })
+      } catch (error) {
+        console.log(error);
+      }
+  };
 
   return (
     <>
@@ -38,10 +56,18 @@ export default function Navbar() {
               </li>
               <br/>
             </ul>
-            <div className="flex flex-col md:flex-row md:justify-end">
+
+            {token !== null ? (
+              <div className="flex flex-col md:flex-row md:justify-end">
+                <Link to={`/profile`} className="px-5 py-3 hover:font-bold">Profile</Link>
+                <button onClick={logout} className="rounded-lg bg-yellow-500 px-5 py-3 hover:font-bold">Sign Out</button>
+              </div>
+            ) : (
+              <div className="flex flex-col md:flex-row md:justify-end">
                 <Link to={`/signup`} className="rounded-lg bg-yellow-500 px-5 py-3 hover:font-bold">Sign Up</Link>
                 <Link to={`/signin`} className="px-5 py-3 hover:font-bold">Sign In</Link>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>

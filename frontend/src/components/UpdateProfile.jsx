@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import api from '../api/api';
 
-const Modal = () => {
+function UpdateProfile({refetch}) {
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
@@ -8,6 +9,27 @@ const Modal = () => {
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
+    const id = localStorage.getItem("id");
+
+    const editProfile = async () => {
+        try {
+        await api.put(`/user/update/${id}`, JSON.stringify({
+            username: username, 
+            name: name,
+            password: password,
+            address: address,
+            phone: phoneNumber,
+            email: email,
+        }))
+        .then((res) => {
+            console.log(res.data)
+            setShowModal(false)
+            refetch();
+        })
+        } catch (error) {
+          console.log(error);
+        }
+    };
 
     return (
         <>
@@ -103,7 +125,7 @@ const Modal = () => {
                     <button
                         className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                         type="button"
-                        // onClick={() => }
+                        onClick={editProfile}
                     >
                         Submit
                     </button>
@@ -117,4 +139,4 @@ const Modal = () => {
     );
 };
 
-export default Modal;
+export default UpdateProfile
