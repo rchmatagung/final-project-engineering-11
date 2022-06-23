@@ -7,12 +7,16 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
 
   const handleSignin = () => {
-    axios.post('https://3575-111-94-105-165.ap.ngrok.io/api/auth/login', JSON.stringify({username: username, password: password}))
+    axios.post('https://6f5c-111-94-105-34.ap.ngrok.io/api/auth/login', JSON.stringify({username: username, password: password}))
       .then(res => {
           const response = res.data.data;
           localStorage.setItem('token', response.token);
-          // localstorage.setItem('RLPP', response.RLPP);
-          // localStorage.setItem('id', response.id);
+          localStorage.setItem('RLPP', response.RLPP);
+          localStorage.setItem('id', response.id);
+
+          console.log("username", username)
+          console.log("password", password)
+
           console.log(res.data.data);
           window.alert("Login Berhasil!")
         })
@@ -43,8 +47,8 @@ const SignIn = () => {
                         />
                     </div>
                     <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" 
-                    type="submit"
-                    onChange={handleSignin}
+                        type="submit"
+                        onClick={handleSignin}
                     >Sign In</button>
                     <div className="max-w-lg mx-auto text-center mt-12 mb-5">
                         <p className="text-grey">Don't have an account? <Link to={`/signup`} className="text-yellow-400 font-bold hover:underline">Sign Up</Link>.</p>

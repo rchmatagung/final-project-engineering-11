@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useSatet, UseEffect} from 'react'
 import logoImg from '../assets/logohi.png'
 import UpdateProfile from './UpdateProfile'
 // import api from "./api/api"

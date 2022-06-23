@@ -11,7 +11,7 @@ const SignUp = () => {
     const [address, setAddress] = useState('');
 
     const handleSignup = () => {
-        axios.post('https://3575-111-94-105-165.ap.ngrok.io/api/auth/register', JSON.stringify({
+        axios.post('https://70ef-111-94-87-54.ap.ngrok.io/api/auth/register', JSON.stringify({
             username: username, 
             name: name,
             password: password,
