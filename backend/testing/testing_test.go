@@ -3,8 +3,10 @@ package testing_test
 import (
 	"bytes"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http/httptest"
 	"os"
 	"strconv"
@@ -22,21 +24,26 @@ import (
 
 var _ = Describe("Api", func() {
 	var router1 = router.Router{}
+	var db *sql.DB
 	var _ = BeforeEach(func() {
-		godotenv.Load("../.env")
+		err := godotenv.Load("../.env")
+		if err != nil {
+			Panic()
+		}
 		port, _ := strconv.Atoi(os.Getenv("CONFIG_SMTP_PORT"))
 		config.CONFIG_SMTP_HOST = os.Getenv("CONFIG_SMTP_HOST")
 		config.CONFIG_SMTP_PORT = port
 		config.CONFIG_SENDER_NAME = os.Getenv("CONFIG_SENDER_NAME")
 		config.CONFIG_AUTH_EMAIL = os.Getenv("CONFIG_AUTH_EMAIL")
 		config.CONFIG_AUTH_PASSWORD = os.Getenv("CONFIG_AUTH_PASSWORD")
-		db := koneksi.GetConnection1()
+		db = koneksi.GetConnection1()
 		router1 = *router.Newrouter(controller.NewAuthHandler(service.NewAuthService(repository.NewUserRepository(db))))
-
+		log.Println("BeforeEach")
 	})
 	AfterEach(func() {
 		db := koneksi.GetConnection1()
 		defer db.Close()
+
 		db.Exec("UPDATE bookmentor SET status='Waiting' WHERE bookid ='HICOD0023' ")
 		db.Exec("UPDATE users SET username='satrio44' WHERE id = 2")
 		db.Exec("DELETE FROM users WHERE username = 'halomoan46'")
@@ -45,7 +52,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/auth/login", func() {
 		When("Login Valid", func() {
 			It("Akan mengembalikan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
@@ -57,7 +63,6 @@ var _ = Describe("Api", func() {
 		})
 		When(" Login Tidak Valid", func() {
 			It("Akan Mengembalikan 400", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1244"}`)
@@ -69,9 +74,9 @@ var _ = Describe("Api", func() {
 		})
 		When("Login Valid Dan Mengembalikan Data", func() {
 			It("Akan Mengembalikan Token", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
+
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
 				w := httptest.NewRecorder()
 				r := httptest.NewRequest("POST", "/api/auth/login", bytes.NewBuffer(data))
@@ -85,7 +90,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/auth/register", func() {
 		When("Register Valid", func() {
 			It("Akan mengembalikan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{
@@ -105,7 +109,6 @@ var _ = Describe("Api", func() {
 		})
 		When("Register  Username Sudah Ada", func() {
 			It("Akan Mengembalikan 400", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{
@@ -127,8 +130,6 @@ var _ = Describe("Api", func() {
 	//
 	Describe("/api/auth/logout", func() {
 		It("Akan mengembalikan 200", func() {
-
-			db := koneksi.GetConnection1()
 			defer db.Close()
 			router := router1
 			w := httptest.NewRecorder()
@@ -142,7 +143,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/user/profile", func() {
 		When(" Header Ada", func() {
 			It("Akan mengembalikan 200 Dan Mengembailkan Data User", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
@@ -171,7 +171,6 @@ var _ = Describe("Api", func() {
 		})
 		When(" Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				w := httptest.NewRecorder()
@@ -189,7 +188,6 @@ var _ = Describe("Api", func() {
 
 		When(" Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				w := httptest.NewRecorder()
@@ -202,7 +200,6 @@ var _ = Describe("Api", func() {
 
 		When(" Data Mentor ada", func() {
 			It("Akan Mengembailkan 200 Dan Detail Mentor", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
@@ -231,7 +228,6 @@ var _ = Describe("Api", func() {
 		})
 		When(" Data Mentor tidak ada", func() {
 			It("Akan Mengembailkan 404", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
@@ -262,7 +258,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/user/update/:id", func() {
 		When("Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := `{
@@ -282,7 +277,6 @@ var _ = Describe("Api", func() {
 
 		When("User Mengubah Param ID Dengan ID User Lain", func() {
 			It("Akan Mengembalikan 401 ", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`)
@@ -318,7 +312,6 @@ var _ = Describe("Api", func() {
 
 		When("User Berhasil Mengupdate Data", func() {
 			It("Akan Mengembalikan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -354,7 +347,6 @@ var _ = Describe("Api", func() {
 
 	Describe("/api/user/mentor/mentorlist", func() {
 		It("Akan Menampilkan data Mentor Dan 200", func() {
-			db := koneksi.GetConnection1()
 			defer db.Close()
 			router := router1
 			data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -387,7 +379,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/user/mentor/mentorlist?skil", func() {
 		When("Skill Mentor Tersedia", func() {
 			It("Akan Mengembalikan Data Mentor Dan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -420,7 +411,6 @@ var _ = Describe("Api", func() {
 
 		When("Tidak Ada Skill Mentor", func() {
 			It("Akan Mengembalikan Data Kosong Dan 404", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -455,7 +445,6 @@ var _ = Describe("Api", func() {
 	Describe("/api/user/booking/mentor/:id", func() {
 		When("Sukses Request Mentoring", func() {
 			It("Akan Menampilkan Pesan Berhasil Mengirim Request dan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -484,7 +473,6 @@ var _ = Describe("Api", func() {
 		})
 		When("Id Mentor Tidak Ada Didalam Database", func() {
 			It("Akan Menampilkan Error Mentor NotFound dan 404", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -517,7 +505,6 @@ var _ = Describe("Api", func() {
 	///
 	Describe("/api/user/booking/status", func() {
 		It("Akan Menampilkan Data List Status Request Mentoring ", func() {
-			db := koneksi.GetConnection1()
 			defer db.Close()
 			router := router1
 			data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -552,7 +539,6 @@ var _ = Describe("Api", func() {
 	Describe("Api Search Artikel User", func() {
 		Describe("/api/user/artikel", func() {
 			It("Menampilkan Semua Data Artikel Dan Mengembalikan 200", func() {
-				db := koneksi.GetConnection1()
 				defer db.Close()
 				router := router1
 				data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -583,7 +569,6 @@ var _ = Describe("Api", func() {
 		Describe("/api/user/artikel/:id", func() {
 			When("Terdapat Artikel Dengan Id Yang Sama Dengan Query Param", func() {
 				It("Mengembalikan Artikel Dengan Id Yang Sama Dengan Query Param Dan Mengembailkan 200", func() {
-					db := koneksi.GetConnection1()
 					defer db.Close()
 					router := router1
 					data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -615,7 +600,6 @@ var _ = Describe("Api", func() {
 			})
 			When("Artikel Tidak Ditemukan", func() {
 				It("Mengembalikan 404", func() {
-					db := koneksi.GetConnection1()
 					defer db.Close()
 					router := router1
 					data := []byte(`{"username":"satrio44", "password":"1234"}`) //Userid 2
@@ -647,7 +631,6 @@ var _ = Describe("Api", func() {
 
 	Describe("/api/mentor/acc/:bookid", func() {
 		It("Akan Mengupdate Status Bookingan Mentor Jika Mentor ACC", func() {
-			db := koneksi.GetConnection1()
 			defer db.Close()
 			router := router1
 			beforedata := GetStatusBookId(db, "HICOD0023") ///Waiting
@@ -657,7 +640,6 @@ var _ = Describe("Api", func() {
 			afterdata := GetStatusBookId(db, "HICOD0023") // Accepted
 			Expect(beforedata).To(Equal("Waiting"))
 			Expect(afterdata).To(Equal("Accepted"))
-
 		})
 
 	})
