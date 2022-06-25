@@ -52,7 +52,7 @@ const Footer = () => {
         </div>
 
         <div className='max-w-[1240px] px-2 py-4 mx-auto text-center text-white'>
-            <p className='py-4'>Copyright 2022. All rights reserved</p>
+            <p className='py-4'>Copyright 2022. HiCoders team's</p>
         </div>
     </div>
   )
