@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS mentor (
 	address varchar(255) not null,
 	phone varchar(255) not null,
 	email varchar(255) not null,
-	created_at datetime not null
+	created_at datetime not null,
+	image varchar(255) not null
 );
 CREATE TABLE IF NOT EXISTS artikel (
     id integer not null primary key AUTOINCREMENT,
