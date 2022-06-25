@@ -10,10 +10,10 @@ import (
 
 func (u *UserRepository) RegisMentor(ctx context.Context, user *model.MentorRegis) error {
 
-	query := "INSERT INTO mentor (skill,bio,name,address,phone,email,created_at) VALUES (?,?,?,?,?,?,?)"
+	query := "INSERT INTO mentor (skill,bio,name,address,phone,email,created_at,image) VALUES (?,?,?,?,?,?,?)"
 	tx, _ := u.Db.Begin()
 
-	_, err := tx.ExecContext(ctx, query, user.Skill, user.Bio, user.Name, user.Address, user.Phone, user.Email, time.Now())
+	_, err := tx.ExecContext(ctx, query, user.Skill, user.Bio, user.Name, user.Address, user.Phone, user.Email, time.Now(), user.Image)
 	if err != nil {
 		tx.Rollback()
 		return errors.New("Error creating user")

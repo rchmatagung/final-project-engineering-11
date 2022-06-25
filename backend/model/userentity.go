@@ -80,6 +80,7 @@ type MentorRegis struct {
 	Address string `json:"address"`
 	Phone   string `json:"phone"`
 	Email   string `json:"email"`
+	Image   string `json:"image"`
 }
 
 type MentorDetail struct {
