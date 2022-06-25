@@ -53,7 +53,7 @@ func (r *AuthServiceimpl) RegisMentor(data *model.MentorRegis) error {
 	}
 
 	err1 := r.mentorRepo.RegisMentor(ctx, data)
-	if err != nil {
+	if err1 != nil {
 		return err1
 	}
 	return nil

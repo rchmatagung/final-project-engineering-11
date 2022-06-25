@@ -8,8 +8,8 @@ import (
 	"github.com/andreburgaud/crypt2go/ecb"
 	"github.com/andreburgaud/crypt2go/padding"
 	"github.com/dgrijalva/jwt-go"
-
 	"github.com/rg-km/final-project-engineering-11/backend/config"
+
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/crypto/blowfish"
 )

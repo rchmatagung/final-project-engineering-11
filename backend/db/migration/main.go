@@ -2,12 +2,19 @@ package migration
 
 import (
 	"database/sql"
+	"os"
 
+	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func Migrate() {
-	db, err := sql.Open("sqlite3", "db/migration/app1.db?_loc=Local")
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+	dbname := os.Getenv("DB_NAME")
+	db, err := sql.Open("sqlite3", `db/migration/`+dbname+`?_loc=Local`)
 	if err != nil {
 		panic(err)
 	}

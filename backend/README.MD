@@ -2,6 +2,8 @@
 Masuk Ke Folder backend lalu ketik go run main.go
 Atau Bisa  Menggunakan URL ini : https://hicoder.herokuapp.com/
 
+Konfigurasi server terdapat pada file .env 
+
 ## LIST API
 
 - `POST`: `/api/auth/login`

@@ -10,13 +10,13 @@ import (
 
 func (u *UserRepository) RegisMentor(ctx context.Context, user *model.MentorRegis) error {
 
-	query := "INSERT INTO mentor (skill,bio,name,address,phone,email,created_at,image) VALUES (?,?,?,?,?,?,?)"
+	query := "INSERT INTO mentor (skill,bio,name,address,phone,email,created_at,image) VALUES (?,?,?,?,?,?,?,?)"
 	tx, _ := u.Db.Begin()
 
 	_, err := tx.ExecContext(ctx, query, user.Skill, user.Bio, user.Name, user.Address, user.Phone, user.Email, time.Now(), user.Image)
 	if err != nil {
 		tx.Rollback()
-		return errors.New("Error creating user")
+		return errors.New("Error Server")
 	}
 	tx.Commit()
 
@@ -35,7 +35,7 @@ func (u *UserRepository) GetMentorByskill(ctx context.Context, skill string) ([]
 	defer rows.Close()
 	for rows.Next() {
 		var mentor model.MentorSkill
-		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Bio, &mentor.Skill)
+		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Bio, &mentor.Skill, &mentor.Image)
 		if err != nil {
 			return nil, err
 		}
@@ -69,7 +69,7 @@ func (u *UserRepository) GetMentorById(ctx context.Context, id int) (*model.Ment
 	}
 	defer rows.Close()
 	if rows.Next() {
-		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill, &mentor.Bio)
+		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill, &mentor.Bio, &mentor.Image)
 		if err != nil {
 			return nil, err
 		}
@@ -118,7 +118,7 @@ func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorDetail,
 	defer rows.Close()
 	for rows.Next() {
 		var mentor model.MentorDetail
-		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill, &mentor.Bio)
+		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill, &mentor.Bio, &mentor.Image)
 		if err != nil {
 			return nil, err
 		}
