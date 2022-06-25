@@ -59,6 +59,7 @@ type MentorSkill struct {
 	Name  string `json:"name"`
 	Bio   string `json:"bio"`
 	Skill string `json:"skill"`
+	Image string `json:"image"`
 }
 
 type PayloadUser struct {
@@ -86,6 +87,7 @@ type MentorDetail struct {
 	Name  string `json:"name"`
 	Skill string `json:"skill"`
 	Bio   string `json:"bio"`
+	Image string `json:"image"`
 }
 
 type UserDetail struct {

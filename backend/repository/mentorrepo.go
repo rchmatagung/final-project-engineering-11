@@ -27,7 +27,7 @@ func (u *UserRepository) RegisMentor(ctx context.Context, user *model.MentorRegi
 func (u *UserRepository) GetMentorByskill(ctx context.Context, skill string) ([]*model.MentorSkill, error) {
 	var mentors []*model.MentorSkill
 
-	query := "SELECT id,name,bio,skill FROM mentor WHERE skill =?"
+	query := "SELECT id,name,bio,skill,image FROM mentor WHERE skill =?"
 	rows, err := u.Db.QueryContext(ctx, query, skill)
 	if err != nil {
 		return nil, errors.New("Error getting mentor")
@@ -60,7 +60,7 @@ func (u *UserRepository) CheckEmailMentor(ctx context.Context, email string) err
 
 }
 func (u *UserRepository) GetMentorById(ctx context.Context, id int) (*model.MentorDetail, error) {
-	query := "SELECT id,name,skill,bio FROM mentor WHERE id = ?"
+	query := "SELECT id,name,skill,bio,image FROM mentor WHERE id = ?"
 
 	var mentor model.MentorDetail
 	rows, err := u.Db.QueryContext(ctx, query, id)
@@ -110,7 +110,7 @@ func (u *UserRepository) CheckMentorBySkill(ctx context.Context, skill string) e
 
 func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorDetail, error) {
 	var mentors []*model.MentorDetail
-	query := "SELECT id,name,skill,bio FROM mentor"
+	query := "SELECT id,name,skill,bio,image FROM mentor"
 	rows, err := u.Db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err

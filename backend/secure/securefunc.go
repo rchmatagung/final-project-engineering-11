@@ -19,8 +19,8 @@ func VerifyPassword(hash string, password string) error {
 }
 
 func GenerateToken(username string, id int, role string) (string, error) {
-	timer := time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()
-	secret := config.Configuration.JWT_SECRET
+	timer := time.Now().Add(config.JWT_EXPIRATION_DURATION).Unix()
+	secret := config.JWT_SECRET
 	claims := jwt.MapClaims{}
 
 	claims["role"] = role
@@ -71,17 +71,17 @@ func RefreshToken(tokenString string) (string, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return []byte(config.Configuration.JWT_SECRET), nil
+		return []byte(config.JWT_SECRET), nil
 	})
 
 	if err1 != nil {
 		return "", errors.New("Token Invalid")
 	}
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		timer := time.Now().Add(config.Configuration.JWT_EXPIRATION_DURATION).Unix()
+		timer := time.Now().Add(config.JWT_EXPIRATION_DURATION).Unix()
 		claims["exp"] = int(timer)
 		token1 := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		token2, err := token1.SignedString([]byte(config.Configuration.JWT_SECRET))
+		token2, err := token1.SignedString([]byte(config.JWT_SECRET))
 		if err != nil {
 			return "", err
 		}

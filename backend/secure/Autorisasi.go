@@ -8,7 +8,7 @@ import (
 	"github.com/rg-km/final-project-engineering-11/backend/model"
 )
 
-func ExtractAuthToken(c *gin.Context) (*model.Authorize, error) {
+func ClaimsAuthToken(c *gin.Context) (*model.Authorize, error) {
 	token, err := VerifyToken(c)
 	if err != nil {
 		return nil, err

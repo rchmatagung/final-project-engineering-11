@@ -10,7 +10,7 @@ import (
 	"github.com/rg-km/final-project-engineering-11/backend/config"
 )
 
-func GetAuthentication(c *gin.Context) error {
+func Authentication(c *gin.Context) error {
 	token, err := VerifyToken(c)
 
 	if err != nil {
@@ -34,7 +34,7 @@ func VerifyToken(c *gin.Context) (*jwt.Token, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return []byte(config.Configuration.JWT_SECRET), nil
+		return []byte(config.JWT_SECRET), nil
 	})
 
 	if err != nil {

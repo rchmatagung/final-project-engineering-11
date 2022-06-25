@@ -9,7 +9,7 @@ import (
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		err := secure.GetAuthentication(c)
+		err := secure.Authentication(c)
 		if err != nil {
 			c.JSON(401, gin.H{
 				"status": 401,
@@ -18,7 +18,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		res, err1 := secure.ExtractAuthToken(c)
+		res, err1 := secure.ClaimsAuthToken(c)
 		if err1 != nil {
 			c.JSON(401, gin.H{
 				"status": 401,
