@@ -12,7 +12,7 @@ const SignUp = () => {
     const nav = useNavigate();
 
     const handleSignup = async () => {
-        await axios.post('https://7b51-111-94-105-152.ap.ngrok.io/api/auth/register', JSON.stringify({
+        await axios.post('https://9e1f-111-94-105-152.ap.ngrok.io/api/auth/register', JSON.stringify({
             username: username, 
             name: name,
             password: password,

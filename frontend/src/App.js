@@ -10,8 +10,7 @@ import {Routes, Route} from 'react-router-dom';
 import ProfileCard from './components/ProfileCard';
 import BookingStatus from './components/BookingStatus'
 import Listmentor from './components/Listmentor';
-// import Listrole from './components/Listrole';
-// import Search from './components/Search';
+import Search from './components/Search';
 
 function App() {
   return (
@@ -36,8 +35,7 @@ function App() {
         <Route path="/findmentor" element={
           <div>
             <Navbar />
-            {/* <Search/>
-            <Listrole/> */}
+            <Search/>
             <Listmentor/>
             <Footer/>
           </div>

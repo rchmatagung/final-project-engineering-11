@@ -7,7 +7,7 @@ function Articles() {
 
     const getUser = async () => {
         try {
-        await api.get('/user/artikel')
+        await api.get('https://8ab4-111-94-105-152.ap.ngrok.io/user/artikel')
          .then((res) => {
           setArticles(res.data.data)
             console.log(res.data.data)
