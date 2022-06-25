@@ -114,7 +114,7 @@ var _ = Describe("Api", func() {
 	})
 
 	Describe("/api/user/profile", func() {
-		When(" Cookie Ada", func() {
+		When(" Header Ada", func() {
 			It("Akan mengembalikan 200 Dan Mengembailkan Data User", func() {
 				db := config.GetConnection1()
 				defer db.Close()
@@ -143,7 +143,7 @@ var _ = Describe("Api", func() {
 				Expect(userdata.Data.Username).To(Equal("satrio44"))
 			})
 		})
-		When(" Cookie Tidak Ada", func() {
+		When(" Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
 				db := config.GetConnection1()
 				defer db.Close()
@@ -160,7 +160,7 @@ var _ = Describe("Api", func() {
 
 	Describe("api/user/mentor/detail", func() {
 
-		When(" Cookie Tidak Ada", func() {
+		When(" Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
 				db := config.GetConnection1()
 				defer db.Close()
@@ -220,7 +220,7 @@ var _ = Describe("Api", func() {
 				Headerres = append(Headerres, id)
 
 				w := httptest.NewRecorder()
-				r := httptest.NewRequest("GET", "/api/user/mentor/detail/5", nil)
+				r := httptest.NewRequest("GET", "/api/user/mentor/detail/8", nil)
 				r.Header.Set("Authorization", `bearer `+Headerres[0])
 				r.Header.Set("RLPP", Headerres[1])
 				r.Header.Set("id", Headerres[2])
@@ -232,7 +232,7 @@ var _ = Describe("Api", func() {
 	})
 
 	Describe("/api/user/update/:id", func() {
-		When("Cookie Tidak Ada", func() {
+		When("Header Tidak Ada", func() {
 			It("Akan mengembalikan 401", func() {
 				db := config.GetConnection1()
 				defer db.Close()

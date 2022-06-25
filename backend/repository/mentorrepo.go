@@ -108,17 +108,17 @@ func (u *UserRepository) CheckMentorBySkill(ctx context.Context, skill string) e
 
 }
 
-func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorList, error) {
-	var mentors []*model.MentorList
-	query := "SELECT id,name,skill FROM mentor"
+func (u *UserRepository) MentorList(ctx context.Context) ([]*model.MentorDetail, error) {
+	var mentors []*model.MentorDetail
+	query := "SELECT id,name,skill,bio FROM mentor"
 	rows, err := u.Db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
-		var mentor model.MentorList
-		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill)
+		var mentor model.MentorDetail
+		err := rows.Scan(&mentor.ID, &mentor.Name, &mentor.Skill, &mentor.Bio)
 		if err != nil {
 			return nil, err
 		}

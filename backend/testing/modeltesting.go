@@ -17,7 +17,7 @@ type UserProfileTesting struct {
 }
 
 type MentorListTesting struct {
-	Data   []*model.MentorList
+	Data   []*model.MentorDetail
 	Status int `json:"status"`
 }
 

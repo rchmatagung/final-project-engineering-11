@@ -7,7 +7,7 @@ import (
 type UserService interface {
 	UpdateUserById(data *model.UserUpdate, id int, cookieid int) error
 	RegisMentor(data *model.MentorRegis) error
-	GetAllMentor() ([]*model.MentorList, error)
+	GetAllMentor() ([]*model.MentorDetail, error)
 	GetMentorBySkill(skill string) ([]*model.MentorSkill, error)
 	GetMentorById(id int) (*model.MentorDetail, error)
 	GetUserDataById(id int) (*model.UserDetail, error)

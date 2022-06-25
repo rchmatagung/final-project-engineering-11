@@ -8,7 +8,7 @@ import (
 	"github.com/rg-km/final-project-engineering-11/backend/secure"
 )
 
-func (r *AuthServiceimpl) GetAllMentor() ([]*model.MentorList, error) {
+func (r *AuthServiceimpl) GetAllMentor() ([]*model.MentorDetail, error) {
 	ctx := context.Background()
 	return r.mentorRepo.MentorList(ctx)
 }
