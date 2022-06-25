@@ -30,10 +30,10 @@ var JWT_SECRET = ""
 var JWT_EXPIRATION_DURATION time.Duration
 var PORT = ""
 
-var CONFIG_SMTP_HOST = "hicoder"
-var CONFIG_SMTP_PORT = 5
-var CONFIG_SENDER_NAME = "HiCoder Company <hicoder224@gmail.com>"
-var CONFIG_AUTH_EMAIL = "hicoder224@gmail.com"
-var CONFIG_AUTH_PASSWORD = "pkadliooghsdelxk"
+var CONFIG_SMTP_HOST = ""
+var CONFIG_SMTP_PORT = 0
+var CONFIG_SENDER_NAME = ""
+var CONFIG_AUTH_EMAIL = ""
+var CONFIG_AUTH_PASSWORD = ""
 
 var Mutex sync.Mutex
