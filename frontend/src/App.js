@@ -2,7 +2,7 @@ import SignIn from './pages/SignIn';
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import Hero from './components/Hero';
-// import Articles from './components/Articles';
+import Articles from './components/Articles';
 import AboutUsHero from "./components/AboutUsHero"
 import OurTeam from "./components/OurTeam";
 import Footer from "./components/Footer";
@@ -19,7 +19,7 @@ function App() {
           <div>
             <Navbar />
             <Hero />
-            {/* <Articles />s */}
+            <Articles />s
             <Footer />
           </div>
         } />
