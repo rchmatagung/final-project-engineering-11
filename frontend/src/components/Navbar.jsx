@@ -26,8 +26,20 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between bg-transparent px-2 py-3 mb-3">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+      <nav className="relative
+          w-full
+          flex flex-wrap
+          items-center
+          justify-between
+          py-4
+          bg-gray-100
+          text-gray-500
+          hover:text-gray-700
+          focus:text-gray-700
+          shadow-lg
+          navbar navbar-expand-lg navbar-light
+          ">
+        <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
           <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
             <div> 
               <img className='h-8 w-15' src={logoImg} alt="Hicoder" />
