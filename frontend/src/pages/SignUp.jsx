@@ -84,7 +84,7 @@ const SignUp = () => {
                         <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" 
                             type="submit"
                             onClick={handleSignup}
-                        >Sign In</button>
+                        >Sign Up</button>
                         <div className="max-w-lg mx-auto text-center mt-8 mb-3">
                             <p className="text-grey">Have an account? <Link to={`/signin`} className="text-yellow-400 font-bold hover:underline">Sign In</Link>.</p>
                         </div>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className='w-full mt-24 bg-black text-white py-y px-2'>
+    <div className='w-full bg-black text-white px-10'>
         <div className='max-w-[1240px] mx-auto grid grid-cols-2 md:grid-cols-6 border-b-2 border-gray-600 py-8'>
             <div className='col-span-2 px-3'>
                 <img className='bg-white h-10 w-18' src={logoImg} alt="Hicoder" /><br/>

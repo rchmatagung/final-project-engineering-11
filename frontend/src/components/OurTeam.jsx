@@ -12,7 +12,7 @@ function OurTeam() {
                 <div className="container mx-auto ">
                     <div className="lg:flex md:flex sm:flex items-center flex-wrap md:justify-around sm:justify-around lg:justify-around">
                         <div className="sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 lg:w-2/5">
-                            <div className="rounded overflow-hidden shadow-md hover:scale-100 hover:bg-yellow-400 bg-white">
+                            <div className="rounded overflow-hidden shadow-md bg-white">
                                 <div className="absolute -mt-20 w-full flex justify-center">
                                     <div className="h-32 w-32">
                                         <img src="https://avatars.githubusercontent.com/u/67967171?v=4" alt="OurTeam-Halomoan Nababan" className="rounded-full object-cover h-full w-full shadow-md" />
@@ -27,7 +27,7 @@ function OurTeam() {
                             </div>
                         </div>
                         <div className="sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 lg:w-2/5">
-                            <div className="rounded overflow-hidden shadow-md bg-white hover:scale-100 hover:bg-yellow-400">
+                            <div className="rounded overflow-hidden shadow-md bg-white">
                                 <div className="absolute -mt-20 w-full flex justify-center">
                                     <div className="h-32 w-32">
                                         <img src="https://avatars.githubusercontent.com/u/62529624?v=4" alt="OurTeam-Meilika Dwi Putri" className="rounded-full object-cover h-full w-full shadow-md" />
@@ -42,7 +42,7 @@ function OurTeam() {
                             </div>
                         </div>
                         <div className="sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 lg:w-2/5">
-                            <div className="rounded overflow-hidden shadow-md bg-white hover:scale-100 hover:bg-yellow-400">
+                            <div className="rounded overflow-hidden shadow-md bg-white">
                                 <div className="absolute -mt-20 w-full flex justify-center">
                                     <div className="h-32 w-32">
                                         <img src="https://avatars.githubusercontent.com/u/62183899?v=4" alt="OurTeam-Muhammad Kevin Rozal" className="rounded-full object-cover h-full w-full shadow-md" />
@@ -57,7 +57,7 @@ function OurTeam() {
                             </div>
                         </div>
                         <div className="sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 lg:w-2/5">
-                            <div className="rounded overflow-hidden shadow-md bg-white hover:scale-100 hover:bg-yellow-400">
+                            <div className="rounded overflow-hidden shadow-md bg-white">
                                 <div className="absolute -mt-20 w-full flex justify-center">
                                     <div className="h-32 w-32">
                                         <img src="https://avatars.githubusercontent.com/u/93823617?v=4" alt="OurTeam-Satrio Wibowo" className="rounded-full object-cover h-full w-full shadow-md" />
@@ -72,7 +72,7 @@ function OurTeam() {
                             </div>
                         </div>
                         <div className="sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 lg:w-2/5">
-                            <div className="rounded overflow-hidden shadow-md bg-white hover:scale-100 hover:bg-yellow-400">
+                            <div className="rounded overflow-hidden shadow-md bg-white">
                                 <div className="absolute -mt-20 w-full flex justify-center">
                                     <div className="h-32 w-32">
                                         <img src="https://avatars.githubusercontent.com/u/72916395?v=4" alt="OurTeam-Arisandi" className="rounded-full object-cover h-full w-full shadow-md" />
