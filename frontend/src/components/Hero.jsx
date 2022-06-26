@@ -8,7 +8,7 @@ const Hero = () => {
             <div className='flex flex-col justify-center md:items-start w-full px-2 '>
                 <h1 className=' text-4xl md:text-5xl lg:text-7xl font-bold'>Let's find <span className="text-yellow-500 ">your Mentor</span></h1>
                 <h1 className=' text-3xl md:text-5xl lg:text-7xl font-bold'>Build <span className="text-yellow-500">your code</span></h1>
-                <p className='text-sm md:text-base lg:text-xl'>Chat mentor, ajukan belajar private , tanya jawab seputaran programming, update informasi seputar programming, semua bisa di Hicoder !</p>
+                <p className='text-sm md:text-base lg:text-xl text-gray-600'>Chat mentor, ajukan belajar private , tanya jawab seputaran programming, update informasi seputar programming, semua bisa di Hicoder !</p>
             </div>
             <div>
                 <img className='w-full' src={heroImg} alt="/" />

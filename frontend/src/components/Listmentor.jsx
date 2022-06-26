@@ -23,9 +23,9 @@ export default function Listmentor() {
       return (
         <div className="bg-gray-200 dark:bg-white-500">
         <h1 className="flex justify-center  text-4xl md:text-5xl lg:text-5xl font-bold">Daftar Mentor</h1>
-        <div className=" bg-gray-200 dark:bg-white-500 flex flex-wrap items-center">
+        <div className=" bg-gray-200 flex justify-center dark:bg-white-500 flex flex-wrap items-center">
           {mentors.map((mentor, index) => {
-                return (
+          return (
           <div className="container max-w-lg bg-white rounded dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out m-20 hover:scale-110"  key={index}>
                   <div className="flex flex-wrap h-2/4 sm:h-64 overflow-hidden">
                       <img
