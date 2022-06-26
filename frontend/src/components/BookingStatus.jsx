@@ -4,7 +4,7 @@ import api from '../api/api'
 export default function BookingStatus() {
     const [status, setStatus] = useState([])
 
-    const getUser = async () => {
+    const getStatus = async () => {
         try {
         await api.get('/user/booking/status')
          .then((res) => {
@@ -17,11 +17,11 @@ export default function BookingStatus() {
     };
     
     useEffect(() => {
-        getUser();
+        getStatus();
     }, []);
 
     return (
-        <div className="bg-gray-100 mx-20">
+        <div className="bg-gray-100">
             <div>
                 <h1 className="lg:text-4xl text-3xl text-center text-gray-800 font-extrabold pt-6 mx-auto">Booking Status</h1>
             </div>
@@ -33,7 +33,7 @@ export default function BookingStatus() {
                         <>
                             {status.map((booking, index) => {
                                 return (
-                                    <div className="mx-2 w-72 lg:mb-0 mb-8" key={index}>
+                                    <div className="mx-2 w-72 mb-8" key={index}>
                                         <div className="bg-yellow-300 rounded-xl">
                                             <div className="p-4">
                                                 <div className="flex items-center">
