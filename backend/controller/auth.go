@@ -21,8 +21,6 @@ func NewAuthHandler(authService service.AuthService, userService service.UserSer
 	return &AuthHandler{authService, userService, bookService, adminService}
 }
 func (a *AuthHandler) Login(c *gin.Context) {
-	config.Mutex.Lock()
-	defer config.Mutex.Unlock()
 	var loginReq model.PayloadUser
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		c.JSON(400, gin.H{
