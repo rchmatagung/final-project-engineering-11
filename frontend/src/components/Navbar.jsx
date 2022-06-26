@@ -26,20 +26,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="relative
-          w-full
-          flex flex-wrap
-          items-center
-          justify-between
-          py-4
-          bg-gray-100
-          text-gray-500
-          hover:text-gray-700
-          focus:text-gray-700
-          shadow-lg
-          navbar navbar-expand-lg navbar-light
-          ">
-        <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
+      <nav className="relative w-full flex flex-wrap items-center justify-between py-4 bg-gray-100 text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg navbar navbar-expand-lg navbar-light ">
+        <div className="container-fluid w-full flex flex-wrap items-center justify-between px-10 lg:px-32">
           <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
             <div> 
               <img className='h-8 w-15' src={logoImg} alt="Hicoder" />
@@ -63,11 +51,16 @@ export default function Navbar() {
               <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
                 <Link to={`/about`} > About </Link>
               </li>
-              <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
-                <Link to={`/findmentor`} > Find Mentor </Link>
-              </li>
-              <br/>
-            </ul>
+              {token !== null ? (
+                  <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
+                    <Link to={`/findmentor`} > Find Mentor </Link>
+                  </li>
+              ) : (
+                  <li className="px-5 py-2 flex items-center text-lg hover:font-bold">
+                    <Link to={`/signin`} > Find Mentor </Link>
+                  </li>
+              )}
+              </ul>
 
             {token !== null ? (
               <div className="flex flex-col md:flex-row md:justify-end">
