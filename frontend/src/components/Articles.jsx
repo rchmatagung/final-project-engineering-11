@@ -33,13 +33,8 @@ function Articles() {
               <img className="rounded-t-lg" src={Art} alt="Article Pic"/>
               <div className="p-4">
                 <div className='overflow-y-hidden h-20'>
-<<<<<<< HEAD
-                <h5 className="text-lg font-bold mb-2">{article.title}</h5>
-                <p className="text-gray-600 text-sm leading-6">{article.content}</p>
-=======
                   <h5 className="text-lg font-bold mb-2">{article.title}</h5>
                   <p className="text-gray-600 text-sm leading-6">{article.content}</p>
->>>>>>> 6c0380fc8011f5211eedeff6e2741adc01a34ba3
                 </div>
                 <button
                   className="bg-yellow-500 hover:bg-yellow-700 text-white active:bg-yellow-600 font-bold hover:yellow-700 uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-2 mt-5 ease-linear transition-all duration-150"
@@ -71,11 +66,7 @@ function Articles() {
                     {/*body*/}
                     <div className="relative p-6 flex-auto">
                       <p className="my-4 text-slate-500 text-lg leading-relaxed">
-<<<<<<< HEAD
                       {article.content}
-=======
-                        {article.content}
->>>>>>> 6c0380fc8011f5211eedeff6e2741adc01a34ba3
                       </p>
                     </div>
                     {/*footer*/}
