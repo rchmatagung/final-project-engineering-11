@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Art from '../assets/support.jpg'
+// import Art from '../assets/support.jpg'
 import api from '../api/api'
 
 function Articles() {
@@ -8,10 +8,10 @@ function Articles() {
 
     const getArticle = async () => {
         try {
-        await api.get('/user/artikel')
+        await api.get('https://hicoder.herokuapp.com/api/user/artikel')
          .then((res) => {
-          setArticles(res.data.data)
-          console.log(res.data.data)
+          setArticles(res.data.data )
+          console.log(res.data.data )
         })
         } catch (error) {
           console.log(error);
@@ -30,7 +30,7 @@ function Articles() {
         {articles.map((article) => {
           return (
             <div className='mt-4 col-span-1 bg-gray-200 shadow-xl' key={article.id}>
-              <img className="rounded-t-lg" src={Art} alt="Article Pic"/>
+              <img className="rounded-t-lg" src={article.image} alt="Article Pic"/>
               <div className="p-4">
                 <div className='overflow-y-hidden h-52'>
                 <h5 className="text-lg font-bold mb-2">{article.title}</h5>
@@ -82,7 +82,7 @@ function Articles() {
                   </div>
                 </div>
               </div>
-              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+              {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
             </>
           ) : null}
                 </div>
