@@ -33,6 +33,11 @@ function Articles() {
               <img className="rounded-t-lg" src={Art} alt="Article Pic"/>
               <div className="p-4">
                 <div className='overflow-y-hidden h-20'>
+<<<<<<< HEAD
+=======
+                <h5 className="text-lg font-bold mb-2">{article.title}</h5>
+                <p className="text-gray-600 text-sm leading-6">{article.content}</p>
+>>>>>>> 72c73df2eff31ca4096098fb28c1e94118d2cc9e
                   <h5 className="text-lg font-bold mb-2">{article.title}</h5>
                   <p className="text-gray-600 text-sm leading-6">{article.content}</p>
                 </div>
